@@ -61,13 +61,13 @@ public class BootReceiver extends BroadcastReceiver {
             List<Reminder> reminders = rb.getAllReminders();
 
             for (Reminder rm : reminders) {
-                mReceivedID = rm.getID();
-                mRepeat = rm.getRepeat();
-                mRepeatNo = rm.getRepeatNo();
-                mRepeatType = rm.getRepeatType();
-                mActive = rm.getActive();
-                mDate = rm.getDate();
-                mTime = rm.getTime();
+                mReceivedID = rm.getBr_id();
+                mRepeat = rm.getBr_bill_frequency();
+                //mRepeatNo = rm.getRepeatNo();
+                //mRepeatType = rm.getRepeatType();
+                //mActive = rm.getActive();
+               // mDate = rm.getDate();
+               // mTime = rm.getTime();
 
                 mDateSplit = mDate.split("/");
                 mTimeSplit = mTime.split(":");
