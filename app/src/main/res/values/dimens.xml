@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="bill_reminder_due_date_ll_marginBottom">8dp</dimen>
+    <dimen name="bill_reminder_due_LL_padding_top">16dp</dimen>
+    <dimen name="bill_reminder_due_date_LL_margin">16dp</dimen>
+    <dimen name="bill_reminder_due_date_logo_height">30dp</dimen>
+    <dimen name="bill_reminder_due_date_logo_margin_right">4dp</dimen>
+    <dimen name="bill_reminder_due_date_logo_margin_top">16dp</dimen>
+    <dimen name="bill_reminder_due_date_checkbox_margin_left">56dp</dimen>
+    <dimen name="bill_reminder_amount_LL_margin">16dp</dimen>
+    <dimen name="bill_reminder_rupees_logo_height">30dp</dimen>
+    <dimen name="bill_reminder_billFrequency_margin">8dp</dimen>
+    <dimen name="bill_reminder_textView_padding">4dp</dimen>
+    <dimen name="bill_reminder_textView_margin">4dp</dimen>
+    <dimen name="bill_reminder_text_size">16sp</dimen>
+    <dimen name="bill_reminder_textView_marginLeft">4dp</dimen>
+    <dimen name="bill_reminder_addnote_LL_marginBottom">96dp</dimen>
+    <dimen name="bill_reminder_addnote_LL_marginTop">8dp</dimen>
+    <dimen name="bill_reminder_addnote_padding">16dp</dimen>
+    <dimen name="bill_reminder_addnote_textSize">16sp</dimen>
+    <dimen name="bill_reminder_floating_action_button_margin">16dp</dimen>
+    <dimen name="activity_bill_reminder_list_recycler_view_margin">8dp</dimen>
+<!--expandable recycler view-->
+    <dimen name="list_item_height">48dp</dimen>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="list_item_left_margin">80dp</dimen>
+
+    <!--calender-->
+    <!-- title bar -->
+    <dimen name="title_bar_button_width">36dp</dimen>
+    <dimen name="title_bar_button_height">36dp</dimen>
+
+    <!-- day -->
+    <dimen name="day_circle_width">24dp</dimen>
+    <dimen name="day_circle_height">24dp</dimen>
+    <dimen name="day_circle_radius">120dp</dimen>
+    <dimen name="day_circle_stroke_width">1dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="design_navigation_icon_size" tools:override="true">40dp</dimen>
+</resources>

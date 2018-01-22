@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Bill Reminders</string>
+    <string name="bill_reminder_due_date">Due Date</string>
+    <string name="bill_reminder_already_paid">Already paid</string>
+    <string name="bill_reminder_bill_frequency">Bill Frequency</string>
+    <string name="bill_reminder_monthly_text_view">Monthly</string>
+    <string name="bill_reminder_bi_monthly">Bi Monthly</string>
+    <string name="bill_reminder_quarterly">Quarterly</string>
+    <string name="bill_reminder_add_a_note">Add a note</string>
+
+    <!--Calender-->
+    <string name="monday">MON</string>
+    <string name="tuesday">TUE</string>
+    <string name="wednesday">WED</string>
+    <string name="thursday">THU</string>
+    <string name="friday">FRI</string>
+    <string name="saturday">SAT</string>
+    <string name="sunday">SUN</string>
+</resources>
