@@ -24,18 +24,18 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bill_reminder_background_color"
                 android:orientation="vertical"
-                android:weightSum="7">
+                android:weightSum="6">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="@dimen/bill_reminder_due_date_ll_marginBottom"
-                    android:layout_weight="4.5"
+                    android:layout_weight="3.5"
                     android:background="@color/bill_reminder_border_LL_background_color"
                     android:elevation="@dimen/cardview_compat_inset_shadow"
+                    android:focusableInTouchMode="true"
                     android:orientation="vertical"
                     android:paddingTop="@dimen/bill_reminder_due_LL_padding_top"
-                    android:focusableInTouchMode="true"
                     android:weightSum="4">
 
                     <LinearLayout
@@ -66,49 +66,14 @@
                                 android:id="@+id/bill_reminder_due_date_edittext"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:backgroundTint="#616161"
                                 android:focusable="false"
                                 android:hint="@string/bill_reminder_due_date"
-                                android:backgroundTint="#616161"
                                 android:onClick="selectDueDate" />
 
                         </android.support.design.widget.TextInputLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/due_time_ll"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_margin="@dimen/bill_reminder_due_date_LL_margin"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="1">
-
-                        <ImageView
-                            android:id="@+id/bill_reminder_due_date_time"
-                            android:layout_width="0dp"
-                            android:layout_height="@dimen/bill_reminder_due_date_logo_height"
-                            android:layout_marginRight="@dimen/bill_reminder_due_date_logo_margin_right"
-                            android:layout_marginTop="@dimen/bill_reminder_due_date_logo_margin_top"
-                            android:layout_weight=".1"
-                            android:src="@drawable/ic_clock" />
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight=".9"
-                            android:orientation="horizontal">
-
-                            <android.support.design.widget.TextInputEditText
-                                android:id="@+id/bill_reminder_due_date_time_edittext"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="false"
-                                android:hint="@string/bill_reminder_due_date"
-                                android:backgroundTint="#616161"
-                                android:onClick="selectDueDateTime" />
-
-                        </android.support.design.widget.TextInputLayout>
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -128,10 +93,8 @@
                             android:id="@+id/bill_reminder_checkbox"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/bill_reminder_tint_color"
-                            />
+                            android:buttonTint="@color/bill_reminder_tint_color" />
                     </LinearLayout>
-
 
 
                     <LinearLayout
@@ -160,8 +123,8 @@
                                 android:id="@+id/bill_reminder_amount_edittext"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Enter Amount"
                                 android:backgroundTint="@color/bill_reminder_tint_color"
+                                android:hint="Enter Amount"
                                 android:inputType="number" />
                         </android.support.design.widget.TextInputLayout>
 
@@ -318,11 +281,11 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="@dimen/bill_reminder_addnote_LL_marginBottom"
                     android:layout_marginTop="@dimen/bill_reminder_addnote_LL_marginTop"
-                    android:orientation="vertical"
                     android:layout_weight="1"
-                    android:focusableInTouchMode="true"
                     android:background="@color/bill_reminder_addnote_LL_background"
-                    android:elevation="@dimen/cardview_compat_inset_shadow">
+                    android:elevation="@dimen/cardview_compat_inset_shadow"
+                    android:focusableInTouchMode="true"
+                    android:orientation="vertical">
 
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/bill_reminder_note"
@@ -336,10 +299,11 @@
                         android:textSize="@dimen/bill_reminder_addnote_textSize"
 
                         />
+
                     <View
                         android:id="@+id/dummyView"
                         android:layout_width="0dp"
-                        android:layout_height="0dp"/>
+                        android:layout_height="0dp" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -352,11 +316,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/bill_reminder_floating_action_button_margin"
         android:clickable="true"
+
         app:backgroundTint="@color/bill_reminder_floating_action_background_tint"
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:fabSize="normal"
-        android:onClick="fabReminderSave"
         app:layout_anchor="@id/custom_toolbar_LL"
         app:layout_anchorGravity="bottom|right|end"
         app:srcCompat="@drawable/ic_action_check" />

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -28,6 +29,8 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     private TextInputEditText informationEditText;
     private TextInputEditText addNoteEditText;
     private TextInputEditText time;
+
+    private FloatingActionButton fab;
 
     private TextView monthlyText;
     private TextView biMonthlyText;
@@ -93,9 +96,64 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Bill Account");
 
+        fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                monthly = monthlyText.getText().toString();
+                biMonthly = biMonthlyText.getText().toString();
+                quarterly = quarterlyText.getText().toString();
+                halfYearly = halfYearlyText.getText().toString();
+                yearly = yearlyText.getText().toString();
+
+                ReminderDatabase rb = new ReminderDatabase(BillReminderDetailEditActivity.this);
+
+                // Creating Reminder
+                int ID = rb.addReminder(new Reminder( br_parent_name, br_parent_id, br_child_name, br_child_id,
+                        br_due_date, br_due_date_time, br_amount, br_bill_id,
+                        br_bill_frequency, br_note, br_already_paid, br_status,
+                        br_created_date, br_edited_date, br_last_viewed_date, br_lang_id));
+
+                // Set up calender for creating the notification
+                mCalendar.set(Calendar.MONTH, --mMonth);
+                mCalendar.set(Calendar.YEAR, mYear);
+                mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
+                mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
+                mCalendar.set(Calendar.MINUTE, mMinute);
+                mCalendar.set(Calendar.SECOND, 0);
+
+                // TODO Check repeat type
+                if (mRepeatType.equals("Minute")) {
+                    mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
+                } else if (mRepeatType.equals("Hour")) {
+                    mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
+                } else if (mRepeatType.equals("Day")) {
+                    mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
+                } else if (mRepeatType.equals("Week")) {
+                    mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
+                } else if (mRepeatType.equals("Month")) {
+                    mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
+                }
+
+                // Create a new notification
+                if (br_status == 1) {
+                    if (mRepeat.equals("true")) {
+                        new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
+                    } else if (mRepeat.equals("false")) {
+                        new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
+                    }
+                }
+
+                // Create toast to confirm new reminder
+                Toast.makeText(getApplicationContext(), "Saved",
+                        Toast.LENGTH_SHORT).show();
+
+                onBackPressed();
+            }
+        });
 
         selectDateEditText = (TextInputEditText) findViewById(R.id.bill_reminder_due_date_edittext);
-        time = (TextInputEditText)findViewById(R.id.bill_reminder_due_date_time_edittext);
+        //time = (TextInputEditText)findViewById(R.id.bill_reminder_due_date_time_edittext);
         amountEditText = (TextInputEditText) findViewById(R.id.bill_reminder_amount_edittext);
         informationEditText = (TextInputEditText) findViewById(R.id.bill_reminder_information_edittext);
         dummyView = (View) findViewById(R.id.dummyView);
@@ -234,7 +292,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
     public void fabReminderSave(View view) {
 
-        monthly = monthlyText.getText().toString();
+        /*monthly = monthlyText.getText().toString();
         biMonthly = biMonthlyText.getText().toString();
         quarterly = quarterlyText.getText().toString();
         halfYearly = halfYearlyText.getText().toString();
@@ -282,7 +340,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         Toast.makeText(getApplicationContext(), "Saved",
                 Toast.LENGTH_SHORT).show();
 
-        onBackPressed();
+        onBackPressed();*/
     }
 
 
