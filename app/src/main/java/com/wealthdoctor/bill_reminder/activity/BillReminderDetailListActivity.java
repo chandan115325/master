@@ -23,7 +23,7 @@ import java.util.List;
 public class BillReminderDetailListActivity extends AppCompatActivity  {
 
     BillReminderAdapterList adapterList;
-    List<BillReminderDetailData> creditCardDataList;
+    List<BillReminderDetailData> broadbandList;
     SearchView searchView;
     RecyclerView recyclerView;
 
@@ -38,29 +38,13 @@ public class BillReminderDetailListActivity extends AppCompatActivity  {
         intent.getExtras();
 
         // Dummy data to check the output.
-        creditCardDataList = new ArrayList<>();
-
-        creditCardDataList.add(new BillReminderDetailData("ABN AMro"));
-        creditCardDataList.add(new BillReminderDetailData("Allahabad Bank"));
-        creditCardDataList.add(new BillReminderDetailData("Amex"));
-        creditCardDataList.add(new BillReminderDetailData("Andhra bank"));
-        creditCardDataList.add(new BillReminderDetailData("AXIS"));
-        creditCardDataList.add(new BillReminderDetailData("Bajaj Finance"));
-        creditCardDataList.add(new BillReminderDetailData("ABN AMro"));
-        creditCardDataList.add(new BillReminderDetailData("Allahabad Bank"));
-        creditCardDataList.add(new BillReminderDetailData("Amex"));
-        creditCardDataList.add(new BillReminderDetailData("Andhra bank"));
-        creditCardDataList.add(new BillReminderDetailData("AXIS"));
-        creditCardDataList.add(new BillReminderDetailData("Bajaj Finance"));
-        creditCardDataList.add(new BillReminderDetailData("ABN AMro"));
-        creditCardDataList.add(new BillReminderDetailData("Allahabad Bank"));
-        creditCardDataList.add(new BillReminderDetailData("Amex"));
-        creditCardDataList.add(new BillReminderDetailData("Andhra bank"));
-        creditCardDataList.add(new BillReminderDetailData("AXIS"));
-        creditCardDataList.add(new BillReminderDetailData("Bajaj Finance"));
+        broadbandList = new ArrayList<>();
+        broadbandList = ChildProviderList.getBroadbandLandlineList();
 
 
-        adapterList = new BillReminderAdapterList(BillReminderDetailListActivity.this, creditCardDataList);
+
+
+        adapterList = new BillReminderAdapterList(BillReminderDetailListActivity.this, broadbandList);
         recyclerView = (RecyclerView) findViewById(R.id.bill_reminder_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterList);

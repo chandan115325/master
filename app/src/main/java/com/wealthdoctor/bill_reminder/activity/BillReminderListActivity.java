@@ -37,22 +37,19 @@ public class BillReminderListActivity extends AppCompatActivity {
 
         billReminderDataList = new ArrayList<>();
 
-        billReminderDataList.add(new BillReminderData("Credit Card"));
-        billReminderDataList.add(new BillReminderData("Data Card"));
-        billReminderDataList.add(new BillReminderData("Electricity"));
-        billReminderDataList.add(new BillReminderData("Water"));
+        billReminderDataList.add(new BillReminderData("BROADBAND/LANDLINE"));
+        billReminderDataList.add(new BillReminderData("CREDIT CARD"));
+        billReminderDataList.add(new BillReminderData("DATACARD"));
+        billReminderDataList.add(new BillReminderData("DTH"));
+        billReminderDataList.add(new BillReminderData("ELECTRICITY"));
         billReminderDataList.add(new BillReminderData("EMI"));
-        billReminderDataList.add(new BillReminderData("Insurance"));
-        billReminderDataList.add(new BillReminderData("Investment"));
+        billReminderDataList.add(new BillReminderData("GAS"));
         billReminderDataList.add(new BillReminderData("Mobile"));
-        billReminderDataList.add(new BillReminderData("Credit Card"));
-        billReminderDataList.add(new BillReminderData("Data Card"));
-        billReminderDataList.add(new BillReminderData("Electricity"));
-        billReminderDataList.add(new BillReminderData("Water"));
-        billReminderDataList.add(new BillReminderData("EMI"));
-        billReminderDataList.add(new BillReminderData("Insurance"));
-        billReminderDataList.add(new BillReminderData("Investment"));
-        billReminderDataList.add(new BillReminderData("Mobile"));
+        billReminderDataList.add(new BillReminderData("INSURANCE"));
+        billReminderDataList.add(new BillReminderData("INVESTMENT"));
+        billReminderDataList.add(new BillReminderData("MOBILE"));
+        billReminderDataList.add(new BillReminderData("WATER"));
+
 
         adapter = new BillReminderAdapter(BillReminderListActivity.this, billReminderDataList);
         recyclerView = (RecyclerView) findViewById(R.id.bill_reminder_recycler_view);

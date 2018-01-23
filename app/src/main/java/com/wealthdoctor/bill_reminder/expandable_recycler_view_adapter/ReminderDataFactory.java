@@ -9,11 +9,11 @@ import java.util.List;
 public class ReminderDataFactory {
 
     public static List<ParentProvider> makeGenres() {
-        return Arrays.asList(makeRockGenre(),
-                makeJazzGenre(),
+        return Arrays.asList(makeRockGenre(),makeRockGenre(),makeRockGenre(),makeRockGenre()
+               /* makeJazzGenre(),
                 makeClassicGenre(),
                 makeSalsaGenre(),
-                makeBluegrassGenre());
+                makeBluegrassGenre()*/);
     }
 
 
@@ -27,7 +27,7 @@ public class ReminderDataFactory {
         return Arrays.asList(airtel);
     }
 
-    public static ParentProvider makeJazzGenre() {
+    /*public static ParentProvider makeJazzGenre() {
         return new ParentProvider("SBI", makeJazzArtists(), R.mipmap.ic_launcher_round);
     }
 
@@ -67,6 +67,6 @@ public class ReminderDataFactory {
         ChildProvider BSNL = new ChildProvider("Already Paid", R.id.child_delete, R.id.child_edit, true);
         return Arrays.asList(BSNL);
     }
-
+*/
 }
 

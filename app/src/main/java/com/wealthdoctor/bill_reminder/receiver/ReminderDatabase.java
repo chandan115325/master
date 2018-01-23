@@ -60,7 +60,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
                 + br_due_date + " TEXT,"
                 + br_due_date_time + " TEXT,"
                 + br_amount + " TEXT,"
-                + br_bill_id + " INTEGER,"
+                + br_bill_id + " TEXT,"
                 + br_bill_frequency + " TEXT,"
                 + br_note + " TEXT,"
                 + br_already_paid + " TEXT,"
@@ -148,7 +148,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
         Reminder reminder = new Reminder(Integer.parseInt(cursor.getString(0)), cursor.getString(1),
                 Integer.parseInt(cursor.getString(2)), cursor.getString(3), Integer.parseInt(cursor.getString(4)),
                 cursor.getString(5), cursor.getString(6), cursor.getString(7),
-                Integer.parseInt(cursor.getString(8)),
+                cursor.getString(8),
                 cursor.getString(9),cursor.getString(10) ,cursor.getString(11),
                 Integer.parseInt(cursor.getString(8)),cursor.getString(13),cursor.getString(14)
                 ,cursor.getString(15),Integer.parseInt(cursor.getString(8)));
@@ -178,7 +178,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
                 reminder.setBr_due_date(cursor.getString(5));
                 reminder.setBr_due_date_time(cursor.getString(6));
                 reminder.setBr_amount(cursor.getString(7));
-                reminder.setBr_bill_id(Integer.parseInt(cursor.getString(8)));
+                reminder.setBr_bill_id(cursor.getString(8));
                 reminder.setBr_bill_frequency(cursor.getString(9));
                 reminder.setBr_note(cursor.getString(10));
                 reminder.setBr_already_paid(cursor.getString(11));

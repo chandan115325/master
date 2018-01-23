@@ -12,7 +12,7 @@ public class Reminder {
     private String br_due_date;
     private String br_due_date_time;
     private String br_amount;
-    private int br_bill_id;
+    private String br_bill_id;
     private String br_bill_frequency;
     private String br_note;
     private String br_already_paid;
@@ -27,7 +27,7 @@ public class Reminder {
     public Reminder(){}
 
     public Reminder(String br_parent_name, int br_parent_id, String br_child_name, int br_child_id, String br_due_date,
-                    String br_due_date_time, String br_amount, int br_bill_id, String br_bill_frequency, String br_note,
+                    String br_due_date_time, String br_amount, String br_bill_id, String br_bill_frequency, String br_note,
                     String br_already_paid,
                     int br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
         this.br_parent_name = br_parent_name;
@@ -51,7 +51,7 @@ public class Reminder {
 
 
     public Reminder(int br_id, String br_parent_name, int br_parent_id, String br_child_name, int br_child_id,
-                    String br_due_date, String br_due_date_time, String br_amount, int br_bill_id,
+                    String br_due_date, String br_due_date_time, String br_amount, String br_bill_id,
                     String br_bill_frequency, String br_note, String br_already_paid,
                     int br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
         this.br_id = br_id;
@@ -137,11 +137,11 @@ public class Reminder {
         this.br_amount = br_amount;
     }
 
-    public int getBr_bill_id() {
+    public String getBr_bill_id() {
         return br_bill_id;
     }
 
-    public void setBr_bill_id(int br_bill_id) {
+    public void setBr_bill_id(String br_bill_id) {
         this.br_bill_id = br_bill_id;
     }
 

@@ -70,7 +70,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     private String br_due_date ;
     private String br_due_date_time;
     private String br_amount;
-    private int br_bill_id = 1;
+    private String br_bill_id ;
     private String br_bill_frequency;
     private String br_note;
     private String br_already_paid = "No";

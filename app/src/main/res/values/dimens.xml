@@ -3,12 +3,12 @@
 
     <dimen name="bill_reminder_due_date_ll_marginBottom">8dp</dimen>
     <dimen name="bill_reminder_due_LL_padding_top">16dp</dimen>
-    <dimen name="bill_reminder_due_date_LL_margin">16dp</dimen>
+    <dimen name="bill_reminder_due_date_LL_margin">8dp</dimen>
     <dimen name="bill_reminder_due_date_logo_height">30dp</dimen>
     <dimen name="bill_reminder_due_date_logo_margin_right">4dp</dimen>
     <dimen name="bill_reminder_due_date_logo_margin_top">16dp</dimen>
     <dimen name="bill_reminder_due_date_checkbox_margin_left">56dp</dimen>
-    <dimen name="bill_reminder_amount_LL_margin">16dp</dimen>
+    <dimen name="bill_reminder_amount_LL_margin">8dp</dimen>
     <dimen name="bill_reminder_rupees_logo_height">30dp</dimen>
     <dimen name="bill_reminder_billFrequency_margin">8dp</dimen>
     <dimen name="bill_reminder_textView_padding">4dp</dimen>
