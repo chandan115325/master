@@ -15,15 +15,10 @@
  */
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
-import android.view.View;
-
-import com.wealthdoctor.R;
 
 
 public class LicencesActivity extends AppCompatActivity {

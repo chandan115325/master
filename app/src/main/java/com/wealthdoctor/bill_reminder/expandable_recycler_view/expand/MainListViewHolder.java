@@ -12,22 +12,27 @@ import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ParentPro
 
 import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
-public class GenreViewHolder extends GroupViewHolder {
+public class MainListViewHolder extends GroupViewHolder {
 
-  private TextView genreName;
+  private TextView billReminderDueDate;
+  private TextView billID;
+  private TextView providerName;
+  private TextView billDueAmount;
   private ImageView arrow;
   private ImageView icon;
 
-  public GenreViewHolder(View itemView) {
+  public MainListViewHolder(View itemView) {
     super(itemView);
-    genreName = (TextView) itemView.findViewById(R.id.list_item_genre_name);
+
+    providerName = (TextView) itemView.findViewById(R.id.list_item_provider_name);
     arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
-    icon = (ImageView) itemView.findViewById(R.id.list_item_genre_icon);
+    icon = (ImageView) itemView.findViewById(R.id.list_item_provider_icon);
+    billReminderDueDate = (TextView)itemView.findViewById(R.id.bill_reminder_due_amount);
   }
 
   public void setGenreTitle(ExpandableGroup genre) {
     if (genre instanceof ParentProvider) {
-      genreName.setText(genre.getTitle());
+      providerName.setText(genre.getTitle());
       icon.setBackgroundResource(((ParentProvider) genre).getIconResId());
     }
 

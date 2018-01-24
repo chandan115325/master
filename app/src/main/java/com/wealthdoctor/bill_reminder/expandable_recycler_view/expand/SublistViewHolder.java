@@ -8,13 +8,13 @@ import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.viewholders.ChildViewHolder;
 
 
-public class ArtistViewHolder extends ChildViewHolder {
+public class SublistViewHolder extends ChildViewHolder {
 
   private TextView childTextView;
   private ImageView childDeleteImage;
   private ImageView childEditImage;
 
-  public ArtistViewHolder(View itemView) {
+  public SublistViewHolder(View itemView) {
     super(itemView);
     childTextView = (TextView) itemView.findViewById(R.id.list_item_child);
     childDeleteImage = (ImageView)itemView.findViewById(R.id.child_edit);

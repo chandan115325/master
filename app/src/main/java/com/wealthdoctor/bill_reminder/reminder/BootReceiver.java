@@ -15,7 +15,7 @@
  */
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,18 +1,4 @@
-package com.wealthdoctor.bill_reminder.receiver;
-
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Intent;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.support.annotation.Nullable;
-
-
-import com.wealthdoctor.MainActivity;
+package com.wealthdoctor.bill_reminder.reminder;
 
 public class NotificationService /*extends Service*/ {
 

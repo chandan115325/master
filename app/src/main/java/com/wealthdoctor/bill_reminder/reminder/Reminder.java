@@ -1,6 +1,6 @@
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
 // Reminder class
 public class Reminder {
@@ -16,7 +16,7 @@ public class Reminder {
     private String br_bill_frequency;
     private String br_note;
     private String br_already_paid;
-    private int br_status;
+    private String br_status;
     private String br_created_date;
     private String br_edited_date;
     private String br_last_viewed_date;
@@ -29,7 +29,7 @@ public class Reminder {
     public Reminder(String br_parent_name, int br_parent_id, String br_child_name, int br_child_id, String br_due_date,
                     String br_due_date_time, String br_amount, String br_bill_id, String br_bill_frequency, String br_note,
                     String br_already_paid,
-                    int br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
+                    String br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
         this.br_parent_name = br_parent_name;
         this.br_parent_id = br_parent_id;
         this.br_child_name = br_child_name;
@@ -53,7 +53,7 @@ public class Reminder {
     public Reminder(int br_id, String br_parent_name, int br_parent_id, String br_child_name, int br_child_id,
                     String br_due_date, String br_due_date_time, String br_amount, String br_bill_id,
                     String br_bill_frequency, String br_note, String br_already_paid,
-                    int br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
+                    String br_status, String br_created_date, String br_edited_date, String br_last_viewed_date, int br_lang_id) {
         this.br_id = br_id;
         this.br_parent_name = br_parent_name;
         this.br_parent_id = br_parent_id;
@@ -169,11 +169,11 @@ public class Reminder {
         this.br_already_paid = br_already_paid;
     }
 
-    public int getBr_status() {
+    public String getBr_status() {
         return br_status;
     }
 
-    public void setBr_status(int br_status) {
+    public void setBr_status(String br_status) {
         this.br_status = br_status;
     }
 

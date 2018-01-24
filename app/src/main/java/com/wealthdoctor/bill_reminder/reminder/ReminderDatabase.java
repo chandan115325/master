@@ -1,7 +1,7 @@
 
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -64,7 +64,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
                 + br_bill_frequency + " TEXT,"
                 + br_note + " TEXT,"
                 + br_already_paid + " TEXT,"
-                + br_status + " INTEGER,"
+                + br_status + " TEXT,"
                 + br_created_date + " TEXT,"
                 + br_edited_date + " TEXT,"
                 + br_last_viewed_date + " TEXT,"
@@ -150,7 +150,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
                 cursor.getString(5), cursor.getString(6), cursor.getString(7),
                 cursor.getString(8),
                 cursor.getString(9),cursor.getString(10) ,cursor.getString(11),
-                Integer.parseInt(cursor.getString(8)),cursor.getString(13),cursor.getString(14)
+                cursor.getString(12),cursor.getString(13),cursor.getString(14)
                 ,cursor.getString(15),Integer.parseInt(cursor.getString(8)));
 
         return reminder;
@@ -182,7 +182,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
                 reminder.setBr_bill_frequency(cursor.getString(9));
                 reminder.setBr_note(cursor.getString(10));
                 reminder.setBr_already_paid(cursor.getString(11));
-                reminder.setBr_status(Integer.parseInt(cursor.getString(12)));
+                reminder.setBr_status(cursor.getString(12));
                 reminder.setBr_created_date(cursor.getString(13));
                 reminder.setBr_edited_date(cursor.getString(14));
                 reminder.setBr_last_viewed_date(cursor.getString(15));

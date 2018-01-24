@@ -15,7 +15,7 @@
  */
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
 // Class to create DateTime objects for easy sorting
 public class DateTimeSorter {

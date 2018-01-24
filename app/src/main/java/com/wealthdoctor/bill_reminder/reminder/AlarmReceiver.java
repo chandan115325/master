@@ -15,7 +15,7 @@
  */
 
 
-package com.wealthdoctor.bill_reminder.receiver;
+package com.wealthdoctor.bill_reminder.reminder;
 
 
 import android.app.AlarmManager;
@@ -30,7 +30,6 @@ import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.WakefulBroadcastReceiver;
 
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.activity.BillReminderDetailEditActivity;

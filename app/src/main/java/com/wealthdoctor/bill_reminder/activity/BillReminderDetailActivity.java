@@ -22,9 +22,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.wealthdoctor.R;
-import com.wealthdoctor.bill_reminder.receiver.AlarmReceiver;
-import com.wealthdoctor.bill_reminder.receiver.Reminder;
-import com.wealthdoctor.bill_reminder.receiver.ReminderDatabase;
+import com.wealthdoctor.bill_reminder.reminder.Reminder;
+import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
 import java.util.Calendar;
 import java.util.List;
@@ -80,7 +79,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
     private String br_bill_frequency;
     private String br_note;
     private String br_already_paid;
-    private int br_status;
+    private String br_status;
     private String br_created_date;
     private String br_edited_date;
     private String br_last_viewed_date;
@@ -156,7 +155,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         });
     }
 
-// Date picker function
+    // Date picker function
     public void selectDueDate(View view) {
         if (view == selectDateEditText) {
 
@@ -185,7 +184,8 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         }
         dueDate = selectDateEditText.getText().toString();
     }
-// Selecting the bill frequency
+
+    // Selecting the bill frequency
     @Override
     public void onClick(View view) {
 
@@ -264,8 +264,11 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             biMonthlyText.setTextColor(getResources().getColor(R.color.bill_reminder_textView_textColor));
         }
     }
-// To save data in local storage from floating action button
+
+    // To save data in local storage from floating action button
     public void saveDataNValidate() {
+
+        boolean validation = false;
         monthly = monthlyText.getText().toString();
         biMonthly = biMonthlyText.getText().toString();
         quarterly = quarterlyText.getText().toString();
@@ -283,7 +286,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         br_bill_frequency = reminderType;
         br_note = addNoteEditText.getText().toString();
         br_already_paid = "No";
-        br_status = 1;
+        br_status = null;
         br_created_date = selectDateEditText.getText().toString();
         br_edited_date = timeEditText.getText().toString();
         br_last_viewed_date = "unknown";
@@ -294,16 +297,20 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             billReminderScroller.setFocusableInTouchMode(true);
             billReminderScroller.fullScroll(ViewGroup.FOCUS_UP);
 
-
+            validation = false;
         } else {
             tilDueDate.setError(null);
+            validation = true;
         }
         if (br_due_date_time.length() < 3) {
             billReminderScroller.setFocusableInTouchMode(true);
             billReminderScroller.fullScroll(ViewGroup.FOCUS_UP);
             tilDueTime.setError("Please select Due Time");
+            validation = false;
+
         } else {
             tilDueTime.setError(null);
+            validation = true;
         }
         if (br_amount.length() < 1) {
             billReminderScroller.setFocusableInTouchMode(true);
@@ -311,21 +318,27 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             tilDueAmount.setError("Please Enter Due Amount");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(selectDateEditText.getWindowToken(), 0);
+            validation = false;
+        } else {
+            // til.setError(null);
+            validation = true;
         }
 
-        if(br_bill_id.length() <1 ){
+        if (br_bill_id.length() < 1) {
             billReminderScroller.setFocusableInTouchMode(true);
             billReminderScroller.fullScroll(ViewGroup.FOCUS_UP);
             tilInformation.setError("Please Enter bill id");
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(selectDateEditText.getWindowToken(), 0);
+            validation = false;
+        } else {
+            tilInformation.setError(null);
+            validation = true;
         }
-        else {
-            tilDueAmount.setError(null);
-        }
-        //else  {
+
+
         // Todo database updation
-           /*
+        if (validation) {
             ReminderDatabase rb = new ReminderDatabase(BillReminderDetailActivity.this);
 
             // Creating Reminder
@@ -339,7 +352,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             Log.d("Database", data.get(0).getBr_due_date().toString());
             Log.d("Database", data.get(0).getBr_due_date_time().toString());
             Log.d("Database", data.get(0).getBr_amount().toString());
-            Log.d("Database", data.get(0).getBr_bill_frequency().toString());
+//            Log.d("Database", data.get(0).getBr_bill_frequency().toString());
 
             //Log.d("Database", data.toString());
 // Create toast to confirm new reminder
@@ -347,9 +360,9 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                     Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(BillReminderDetailActivity.this, BillReminderActivity.class);
-            startActivity(intent);*/
-    }
-    // Todo Set up calender for creating the notification
+            startActivity(intent);
+        }
+        // Todo Set up calender for creating the notification
                /* mCalendar.set(Calendar.MONTH, --mMonth);
                 mCalendar.set(Calendar.YEAR, mYear);
                 mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
@@ -357,7 +370,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                 mCalendar.set(Calendar.MINUTE, mMinute);
                 mCalendar.set(Calendar.SECOND, 0);*/
 
-    // TODO Check repeat type
+        // TODO Check repeat type
                 /*if (mRepeatType.equals("Minute")) {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
                 } else if (mRepeatType.equals("Hour")) {
@@ -370,7 +383,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
                 }*/
 
-    // TODO Create a new notification
+        // TODO Create a new notification
                 /*if (br_status == 1) {
                     if (mRepeat.equals("true")) {
                         new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
@@ -380,9 +393,10 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                 }*/
 
 
-    //}
+        //}
+    }
 
-// Todo to create reminder and notification
+    // Todo to create reminder and notification
     public void fabReminderSave(View view) {
 
         Log.d("Floating action button", "working");
@@ -439,7 +453,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         onBackPressed();*/
     }
 
-// Time picker from edittext
+    // Time picker from edittext
     public void selectDueDateTime(View view) {
 
         Calendar mcurrentTime = Calendar.getInstance();

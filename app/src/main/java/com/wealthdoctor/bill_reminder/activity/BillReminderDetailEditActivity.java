@@ -15,9 +15,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.wealthdoctor.R;
-import com.wealthdoctor.bill_reminder.receiver.AlarmReceiver;
-import com.wealthdoctor.bill_reminder.receiver.Reminder;
-import com.wealthdoctor.bill_reminder.receiver.ReminderDatabase;
+import com.wealthdoctor.bill_reminder.reminder.AlarmReceiver;
+import com.wealthdoctor.bill_reminder.reminder.Reminder;
+import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
 import java.util.Calendar;
 
@@ -74,7 +74,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     private String br_bill_frequency;
     private String br_note;
     private String br_already_paid = "No";
-    private int br_status = 1;
+    private String br_status ;
     private String br_created_date;
     private String br_edited_date;
     private String br_last_viewed_date;
@@ -136,13 +136,13 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
                 }
 
                 // Create a new notification
-                if (br_status == 1) {
+               /* if (br_status == 1) {
                     if (mRepeat.equals("true")) {
                         new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
                     } else if (mRepeat.equals("false")) {
                         new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
                     }
-                }
+                }*/
 
                 // Create toast to confirm new reminder
                 Toast.makeText(getApplicationContext(), "Saved",

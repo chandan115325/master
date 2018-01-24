@@ -23,10 +23,17 @@ import com.wealthdoctor.bill_reminder.calender.data.CalendarAdapter;
 import com.wealthdoctor.bill_reminder.calender.data.Day;
 import com.wealthdoctor.bill_reminder.calender.widget.FlexibleCalendar;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.expand.GenreAdapter;
+import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ChildProvider;
+import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ParentProvider;
+import com.wealthdoctor.bill_reminder.reminder.Reminder;
+import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
-import static com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ReminderDataFactory.makeGenres;
+//import static com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ReminderDataFactory.makeGenres;
 
 
 public class BillReminderActivity extends AppCompatActivity {
@@ -74,7 +81,7 @@ public class BillReminderActivity extends AppCompatActivity {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        adapter = new GenreAdapter(makeGenres());
+        adapter = new GenreAdapter(dataList());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -100,7 +107,7 @@ public class BillReminderActivity extends AppCompatActivity {
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-               v.requestFocus();
+                v.requestFocus();
                 return false;
             }
         });
@@ -110,7 +117,7 @@ public class BillReminderActivity extends AppCompatActivity {
                 if (flag) {
                     viewCalendar.collapse(500);
                     flag = false;
-                } else if(!flag) {
+                } else if (!flag) {
                     viewCalendar.expand(500);
                     flag = true;
                 }
@@ -194,7 +201,7 @@ public class BillReminderActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-       // menuInflater.inflate(R.menu.bill_reminder, menu);
+        // menuInflater.inflate(R.menu.bill_reminder, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -202,4 +209,42 @@ public class BillReminderActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+    // Retrieving data from ReminderDatabase
+    public List<ParentProvider> dataList() {
+        ReminderDatabase dbList = new ReminderDatabase(this);
+        List<Reminder> reminderList = new ArrayList<>();
+        reminderList = dbList.getAllReminders();
+
+
+        int reminderSize = reminderList.size();
+        ParentProvider reminderListDB = null;
+
+        for(int i = 0; i < reminderSize; i++) {
+                    reminderListDB = new ParentProvider(reminderList.get(i).getBr_parent_name(),
+                    reminderList.get(i).getBr_created_date(), reminderList.get(i).getBr_bill_id(),
+                    reminderList.get(i).getBr_status(),reminderList.get(i).getBr_amount(),
+                    makeSublistEditorial(), R.mipmap.ic_launcher_round);
+            Log.d("Database", reminderList.get(i).getBr_amount());
+           /* ParentProvider(String title, String dueDate, String billInformation, String billStatus, String billAmount,
+                    List<ChildProvider> items, int iconResId)*/
+        /*public  List<ParentProvider> makeGenres () {
+            return Arrays.asList(makeRockGenre(), makeRockGenre(), makeRockGenre(), makeRockGenre());
+        }*/
+        }
+        return Arrays.asList(reminderListDB);
+    }
+
+    /*public  ParentProvider makeRockGenre() {
+        return new ParentProvider("Airtel", makeSublistEditorial(), R.mipmap.ic_launcher_round);
+    }*/
+
+
+    public  static List<ChildProvider> makeSublistEditorial() {
+        ChildProvider airtel = new ChildProvider("Already Paid", R.id.child_delete, R.id.child_edit, true);
+        return Arrays.asList(airtel);
+    }
 }
+
+
+

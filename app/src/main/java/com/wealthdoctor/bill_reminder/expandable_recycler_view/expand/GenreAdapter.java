@@ -12,37 +12,37 @@ import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ParentPro
 
 import java.util.List;
 
-public class GenreAdapter extends ExpandableRecyclerViewAdapter<GenreViewHolder, ArtistViewHolder> {
+public class GenreAdapter extends ExpandableRecyclerViewAdapter<MainListViewHolder, SublistViewHolder> {
 
   public GenreAdapter(List<? extends ExpandableGroup> groups) {
     super(groups);
   }
 
   @Override
-  public GenreViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+  public MainListViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.list_item_genre, parent, false);
-    return new GenreViewHolder(view);
+    return new MainListViewHolder(view);
   }
 
   @Override
-  public ArtistViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+  public SublistViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
     View view = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.list_item_child, parent, false);
-    return new ArtistViewHolder(view);
+    return new SublistViewHolder(view);
   }
 
   @Override
-  public void onBindChildViewHolder(ArtistViewHolder holder, int flatPosition,
-      ExpandableGroup group, int childIndex) {
+  public void onBindChildViewHolder(SublistViewHolder holder, int flatPosition,
+                                    ExpandableGroup group, int childIndex) {
 
     final ChildProvider childProvider = ((ParentProvider) group).getItems().get(childIndex);
     holder.setArtistName(childProvider.getName());
   }
 
   @Override
-  public void onBindGroupViewHolder(GenreViewHolder holder, int flatPosition,
-      ExpandableGroup group) {
+  public void onBindGroupViewHolder(MainListViewHolder holder, int flatPosition,
+                                    ExpandableGroup group) {
 
     holder.setGenreTitle(group);
   }
