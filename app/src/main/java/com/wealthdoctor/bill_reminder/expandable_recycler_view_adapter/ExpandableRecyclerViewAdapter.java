@@ -1,11 +1,14 @@
 package com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
+import com.wealthdoctor.bill_reminder.activity.BillReminderActivity;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.listeners.ExpandCollapseListener;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.listeners.GroupExpandCollapseListener;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.listeners.OnGroupClickListener;
@@ -19,7 +22,7 @@ import java.util.List;
 
 public abstract class ExpandableRecyclerViewAdapter<GVH extends GroupViewHolder, CVH extends ChildViewHolder>
         extends RecyclerView.Adapter implements ExpandCollapseListener, OnGroupClickListener {
-
+    BillReminderActivity billReminderActivity = new BillReminderActivity();
     private static final String EXPAND_STATE_MAP = "expandable_recyclerview_adapter_expand_state_map";
 
     protected ExpandableList expandableList;
@@ -51,6 +54,7 @@ public abstract class ExpandableRecyclerViewAdapter<GVH extends GroupViewHolder,
             case ExpandableListPosition.GROUP:
                 GVH gvh = onCreateGroupViewHolder(parent, viewType);
                 gvh.setOnGroupClickListener(this);
+
                 return gvh;
             case ExpandableListPosition.CHILD:
                 CVH cvh = onCreateChildViewHolder(parent, viewType);

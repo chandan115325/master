@@ -1,6 +1,7 @@
 package com.wealthdoctor.bill_reminder.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.calender.data.CalendarAdapter;
@@ -70,7 +72,7 @@ public class BillReminderActivity extends AppCompatActivity {
         });
 
         // Calender Expand functionality
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
@@ -103,11 +105,11 @@ public class BillReminderActivity extends AppCompatActivity {
                 }
             }
         });
-
+// Todo to control the recyclerview scroller on item click
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                v.requestFocus();
+
                 return false;
             }
         });
@@ -212,27 +214,29 @@ public class BillReminderActivity extends AppCompatActivity {
 
     // Retrieving data from ReminderDatabase
     public List<ParentProvider> dataList() {
+        List<ParentProvider> br_reminder_list = new ArrayList<>();
         ReminderDatabase dbList = new ReminderDatabase(this);
         List<Reminder> reminderList = new ArrayList<>();
         reminderList = dbList.getAllReminders();
 
 
         int reminderSize = reminderList.size();
-        ParentProvider reminderListDB = null;
-
-        for(int i = 0; i < reminderSize; i++) {
-                    reminderListDB = new ParentProvider(reminderList.get(i).getBr_parent_name(),
+        //ParentProvider reminderListDB = null;
+// Todo updating main list reminder data
+        for (int i = 0; i < reminderSize; i++) {
+            br_reminder_list.add(new ParentProvider(reminderList.get(i).getBr_parent_name(),
                     reminderList.get(i).getBr_created_date(), reminderList.get(i).getBr_bill_id(),
-                    reminderList.get(i).getBr_status(),reminderList.get(i).getBr_amount(),
-                    makeSublistEditorial(), R.mipmap.ic_launcher_round);
-            Log.d("Database", reminderList.get(i).getBr_amount());
+                    reminderList.get(i).getBr_amount(), reminderList.get(i).getBr_status(),
+                    makeSublistEditorial(), R.mipmap.ic_launcher_round));
+            Log.d("Database", reminderList.get(i).getBr_bill_id());
            /* ParentProvider(String title, String dueDate, String billInformation, String billStatus, String billAmount,
                     List<ChildProvider> items, int iconResId)*/
         /*public  List<ParentProvider> makeGenres () {
             return Arrays.asList(makeRockGenre(), makeRockGenre(), makeRockGenre(), makeRockGenre());
         }*/
         }
-        return Arrays.asList(reminderListDB);
+        //return Arrays.asList(reminderListDB);
+        return br_reminder_list;
     }
 
     /*public  ParentProvider makeRockGenre() {
@@ -240,7 +244,7 @@ public class BillReminderActivity extends AppCompatActivity {
     }*/
 
 
-    public  static List<ChildProvider> makeSublistEditorial() {
+    public static List<ChildProvider> makeSublistEditorial() {
         ChildProvider airtel = new ChildProvider("Already Paid", R.id.child_delete, R.id.child_edit, true);
         return Arrays.asList(airtel);
     }

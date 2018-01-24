@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.wealthdoctor.R;
+import com.wealthdoctor.bill_reminder.model.BillReminderDetailData;
 import com.wealthdoctor.bill_reminder.reminder.Reminder;
 import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
@@ -97,6 +98,8 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
     TextInputLayout tilDueAmount;
     TextInputLayout tilInformation;
 
+    BillReminderDetailData billReminderDetailData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +139,8 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         biMonthlyText.setOnClickListener(this);
         yearlyText.setOnClickListener(this);
         quarterlyText.setOnClickListener(this);
+
+        billReminderDetailData =  getIntent().getParcelableExtra("Provider List");
 
         coloredView = dummyView;
 
@@ -276,7 +281,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         yearly = yearlyText.getText().toString();
 
         br_parent_id = 1;
-        br_parent_name = "Mobile Operator";
+        br_parent_name = billReminderDetailData.getBillReminderDetailData();
         br_child_id = 1;
         br_child_name = "Aircel";
         br_due_date = selectDateEditText.getText().toString();

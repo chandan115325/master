@@ -14,18 +14,21 @@ import android.view.MenuInflater;
 
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.adapter.BillReminderAdapterList;
+import com.wealthdoctor.bill_reminder.model.BillReminderData;
 import com.wealthdoctor.bill_reminder.model.BillReminderDetailData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class BillReminderDetailListActivity extends AppCompatActivity  {
+public class BillReminderDetailListActivity extends AppCompatActivity {
 
     BillReminderAdapterList adapterList;
     List<BillReminderDetailData> broadbandList;
     SearchView searchView;
     RecyclerView recyclerView;
+    BillReminderData providerItemName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,14 +37,13 @@ public class BillReminderDetailListActivity extends AppCompatActivity  {
 
         //Todo To get the category KEY to identify the List of items.
         Intent intent = getIntent();
-        intent.getFlags();
-        intent.getExtras();
+        // BillReminderData dataItem = intent.getExtras();
+        providerItemName = getIntent().getParcelableExtra("Item");
+
 
         // Dummy data to check the output.
         broadbandList = new ArrayList<>();
         broadbandList = ChildProviderList.getBroadbandLandlineList();
-
-
 
 
         adapterList = new BillReminderAdapterList(BillReminderDetailListActivity.this, broadbandList);
@@ -59,7 +61,7 @@ public class BillReminderDetailListActivity extends AppCompatActivity  {
 
         setTitle("Type Provider");
         // white background notification bar
-       // whiteNotificationBar(recyclerView);
+        // whiteNotificationBar(recyclerView);
 
         setTitle("Select Provider");
 

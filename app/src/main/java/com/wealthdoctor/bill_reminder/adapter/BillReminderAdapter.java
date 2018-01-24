@@ -67,10 +67,10 @@ public class BillReminderAdapter extends RecyclerView.Adapter<BillReminderAdapte
                 public void onClick(View v){
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION){
-                        BillReminderData clickedBillReminderDataItem = billReminderList.get(pos);
+                        BillReminderData listItem = billReminderList.get(pos);
                         Intent intent = new Intent(mContext, BillReminderDetailListActivity.class);
-                        intent.putExtra("dataItem", clickedBillReminderDataItem );
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Item",listItem);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         mContext.startActivity(intent);
                         //Toast.makeText(v.getContext(), "You clicked " + clickedBillReminderDataItem.getOriginalTitle(), Toast.LENGTH_SHORT).show();
                     }

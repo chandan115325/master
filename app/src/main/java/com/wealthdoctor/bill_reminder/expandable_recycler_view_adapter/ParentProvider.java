@@ -8,10 +8,10 @@ import java.util.List;
 public class ParentProvider extends ExpandableGroup<ChildProvider> {
 
     private int iconResId;
-
-    public ParentProvider(String title, String dueDate, String billInformation, String billStatus, String billAmount,
+//Todo Main reminder list items
+    public ParentProvider(String title, String dueDate, String billID, String billAmount, String billStatus,
                           List<ChildProvider> items, int iconResId) {
-        super(title, items);
+        super(title, dueDate, billID,  billAmount, billStatus, items);
         this.iconResId = iconResId;
     }
 

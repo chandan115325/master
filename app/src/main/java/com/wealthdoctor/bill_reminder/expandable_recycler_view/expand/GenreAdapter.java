@@ -39,7 +39,7 @@ public class GenreAdapter extends ExpandableRecyclerViewAdapter<MainListViewHold
     final ChildProvider childProvider = ((ParentProvider) group).getItems().get(childIndex);
     holder.setArtistName(childProvider.getName());
   }
-
+//Todo to edit the main list item
   @Override
   public void onBindGroupViewHolder(MainListViewHolder holder, int flatPosition,
                                     ExpandableGroup group) {
