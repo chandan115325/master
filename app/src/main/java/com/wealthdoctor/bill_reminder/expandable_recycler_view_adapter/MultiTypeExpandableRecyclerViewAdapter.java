@@ -1,5 +1,6 @@
 package com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
 
@@ -12,9 +13,9 @@ import java.util.List;
 
 public abstract class MultiTypeExpandableRecyclerViewAdapter<GVH extends GroupViewHolder, CVH extends ChildViewHolder>
     extends ExpandableRecyclerViewAdapter<GVH, CVH> {
-
-  public MultiTypeExpandableRecyclerViewAdapter(List<? extends ExpandableGroup> groups) {
-    super(groups);
+ Context mContext;
+  public MultiTypeExpandableRecyclerViewAdapter(Context mContext, List<? extends ExpandableGroup> groups) {
+    super(mContext,groups);
   }
 
   /**

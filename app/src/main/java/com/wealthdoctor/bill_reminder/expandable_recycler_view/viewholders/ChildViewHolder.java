@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wealthdoctor.R;
-import com.wealthdoctor.bill_reminder.activity.BillReminderActivity;
-import com.wealthdoctor.bill_reminder.activity.BillReminderDetailEditActivity;
+import com.wealthdoctor.bill_reminder.activity.BillReminderDetailActivity;
+import com.wealthdoctor.bill_reminder.reminder.Reminder;
+import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
 
 public class ChildViewHolder extends RecyclerView.ViewHolder {
@@ -22,29 +22,37 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
     ImageView deleteIcon;
     CheckBox alreadyPaid;
     private Context mContext;
+    ReminderDatabase rb ;
 
     public ChildViewHolder(View itemView) {
         super(itemView);
 
-        edit = (TextView) itemView.findViewById(R.id.list_item_child);
+        mContext = itemView.getContext();
+
+        //edit = (TextView) itemView.findViewById(R.id.list_item_child);
         editIcon = (ImageView) itemView.findViewById(R.id.child_edit);
         deleteIcon = (ImageView) itemView.findViewById(R.id.child_delete);
         alreadyPaid = (CheckBox) itemView.findViewById(R.id.child_already_paid);
 
+        rb = new ReminderDatabase(mContext);
 
-        edit.setOnClickListener(new View.OnClickListener() {
+       /* edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, BillReminderDetailEditActivity.class);
+               mContext = v.getContext();
+                Intent intent = new Intent(mContext, BillReminderDetailActivity.class);
                 mContext.startActivity(intent);
                 Log.d("BillReminder", "edit is working");
 
             }
         });
-
+*/
         editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(mContext, BillReminderDetailActivity.class);
+                mContext.startActivity(intent);
+
                 Log.d("BillReminder", "Edit Icon working");
             }
         });
@@ -52,8 +60,10 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
         deleteIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Log.d("BillReminder", "Delete Icon working");
+                int item = getAdapterPosition();
+                Reminder reminder = rb.getReminder(item);
+                rb.deleteReminder(reminder);
+                Log.d("BillReminder", "Delete Icon working" +item);
 
             }
         });

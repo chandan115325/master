@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.wealthdoctor.bill_reminder.activity.BillReminderActivity;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.listeners.ExpandCollapseListener;
@@ -30,8 +29,9 @@ public abstract class ExpandableRecyclerViewAdapter<GVH extends GroupViewHolder,
 
     private OnGroupClickListener groupClickListener;
     private GroupExpandCollapseListener expandCollapseListener;
-
-    public ExpandableRecyclerViewAdapter(List<? extends ExpandableGroup> groups) {
+    Context mContext;
+    public ExpandableRecyclerViewAdapter(Context mContext, List<? extends ExpandableGroup> groups) {
+        this.mContext = mContext;
         this.expandableList = new ExpandableList(groups);
         this.expandCollapseController = new ExpandCollapseController(expandableList, this);
     }

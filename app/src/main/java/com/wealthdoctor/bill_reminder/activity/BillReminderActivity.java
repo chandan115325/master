@@ -1,7 +1,6 @@
 package com.wealthdoctor.bill_reminder.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.calender.data.CalendarAdapter;
@@ -83,7 +81,7 @@ public class BillReminderActivity extends AppCompatActivity {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
 
-        adapter = new GenreAdapter(dataList());
+        adapter = new GenreAdapter(BillReminderActivity.this,dataList());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

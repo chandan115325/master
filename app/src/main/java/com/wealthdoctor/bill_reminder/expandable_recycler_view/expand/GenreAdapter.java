@@ -1,5 +1,6 @@
 package com.wealthdoctor.bill_reminder.expandable_recycler_view.expand;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,10 @@ import java.util.List;
 
 public class GenreAdapter extends ExpandableRecyclerViewAdapter<MainListViewHolder, SublistViewHolder> {
 
-  public GenreAdapter(List<? extends ExpandableGroup> groups) {
-    super(groups);
+  Context mContext;
+
+  public GenreAdapter(Context mContext, List<? extends ExpandableGroup> groups) {
+    super(mContext,groups);
   }
 
   @Override
