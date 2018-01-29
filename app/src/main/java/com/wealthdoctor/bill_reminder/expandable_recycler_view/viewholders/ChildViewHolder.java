@@ -27,6 +27,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
     ReminderDatabase rb;
     BillReminderActivity billReminderActivity = new BillReminderActivity();
     Reminder temp;
+    boolean status;
 
     public ChildViewHolder(View itemView) {
         super(itemView);
@@ -128,6 +129,9 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Log.d("BillReminder", "Checkbox is working");
+
+                status = alreadyPaid.isChecked();
+                Log.d("Billreminder checkbox", String.valueOf(status));
             }
         });
     }
