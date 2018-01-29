@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import com.wealthdoctor.MainActivity;
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.adapter.BillReminderAdapterList;
 import com.wealthdoctor.bill_reminder.model.BillReminderData;
@@ -112,6 +113,11 @@ public class BillReminderDetailListActivity extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.WHITE);
         }
     }*/
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, BillReminderActivity.class );
+        startActivity(intent);
+    }
 
 }

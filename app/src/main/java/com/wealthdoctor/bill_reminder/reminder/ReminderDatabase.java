@@ -52,7 +52,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_REMINDERS_TABLE = "CREATE TABLE " + TABLE_REMINDERS +
                 "("
-                + br_id + " INTEGER PRIMARY KEY,"
+                + br_id + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + br_parent_name + " TEXT,"
                 + br_parent_id + " INTEGER,"
                 + br_child_name + " TEXT,"
@@ -142,7 +142,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
 
                 new String[] {String.valueOf(id)}, null, null, null, null);
 
-        if (cursor != null)
+        if (cursor.getCount() >=0)
             cursor.moveToFirst();
 
         Reminder reminder = new Reminder(Integer.parseInt(cursor.getString(0)), cursor.getString(1),

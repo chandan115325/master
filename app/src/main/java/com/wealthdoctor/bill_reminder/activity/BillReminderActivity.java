@@ -2,6 +2,7 @@ package com.wealthdoctor.bill_reminder.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.wealthdoctor.MainActivity;
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.calender.data.CalendarAdapter;
 import com.wealthdoctor.bill_reminder.calender.data.Day;
@@ -25,12 +27,19 @@ import com.wealthdoctor.bill_reminder.calender.widget.FlexibleCalendar;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.expand.GenreAdapter;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ChildProvider;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ParentProvider;
+import com.wealthdoctor.bill_reminder.reminder.DateTimeSorter;
 import com.wealthdoctor.bill_reminder.reminder.Reminder;
 import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 //import static com.wealthdoctor.bill_reminder.expandable_recycler_view_adapter.ReminderDataFactory.makeGenres;
@@ -40,8 +49,25 @@ public class BillReminderActivity extends AppCompatActivity {
 
     private FloatingActionButton addButton;
     private FlexibleCalendar viewCalendar;
-    public GenreAdapter adapter;
+    public static GenreAdapter adapter;
     boolean flag = true;
+    RecyclerView recyclerView;
+
+    // Initialize lists
+    List<String> br_status = new ArrayList<>();
+    List<String> br_parentName = new ArrayList<>();
+    List<String> br_bill_id = new ArrayList<>();
+    List<String> br_amount = new ArrayList<>();
+    List<String> Actives = new ArrayList<>();
+    List<String> DateAndTime = new ArrayList<>();
+    List<Integer> IDList = new ArrayList<>();
+    List<DateTimeSorter> DateTimeSortList = new ArrayList<>();
+    int reminderSize;
+    public static List<ParentProvider> br_reminder_list;
+    ReminderDatabase db ;
+    List<Reminder> reminderList;
+    int key = 0;
+    public static LinkedHashMap<Integer, Integer> IDmap = new LinkedHashMap<>();
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -55,9 +81,11 @@ public class BillReminderActivity extends AppCompatActivity {
         // toolbar fancy stuff
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setTitle(R.string.toolbar_title);
-
+        //this.finish();
+        overridePendingTransition(0,0);
+        getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         setTitle("Bill Reminder");
-
+        db = new ReminderDatabase(this);
         viewCalendar = (FlexibleCalendar) findViewById(R.id.calendar);
         addButton = (FloatingActionButton) findViewById(R.id.fab_add);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -68,9 +96,11 @@ public class BillReminderActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //Todo put in seperate thread, getting all the reminder from database
+        reminderList = new ArrayList<>();
 
         // Calender Expand functionality
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
@@ -80,10 +110,14 @@ public class BillReminderActivity extends AppCompatActivity {
         if (animator instanceof DefaultItemAnimator) {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
         }
-
-        adapter = new GenreAdapter(BillReminderActivity.this,dataList());
+        br_reminder_list = dataList();
+        adapter = new GenreAdapter(BillReminderActivity.this, br_reminder_list);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        float offsetPx = getResources().getDimension(R.dimen.bottom_offset_dp);
+        BottomOffsetDecoration bottomOffsetDecoration = new BottomOffsetDecoration((int) offsetPx);
+        recyclerView.addItemDecoration(bottomOffsetDecoration);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -103,6 +137,8 @@ public class BillReminderActivity extends AppCompatActivity {
                 }
             }
         });
+
+
 // Todo to control the recyclerview scroller on item click
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -130,6 +166,7 @@ public class BillReminderActivity extends AppCompatActivity {
 
         calender();
     }
+
 
     public void calender() {
 
@@ -210,28 +247,56 @@ public class BillReminderActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
     // Retrieving data from ReminderDatabase
     public List<ParentProvider> dataList() {
-        List<ParentProvider> br_reminder_list = new ArrayList<>();
-        ReminderDatabase dbList = new ReminderDatabase(this);
-        List<Reminder> reminderList = new ArrayList<>();
-        reminderList = dbList.getAllReminders();
+
+        reminderList = db.getAllReminders();
+        reminderSize = reminderList.size();
+        br_reminder_list = new ArrayList<>();
+        // Add date and time as DateTimeSorter objects
+        for (int k = 0; k < reminderSize; k++) {
+            // DateTimeSortList.add(new DateTimeSorter(key, DateAndTime.get(k)));
+            IDList.add(reminderList.get(k).getBr_id());
+            br_parentName.add(reminderList.get(k).getBr_parent_name());
+            br_amount.add(reminderList.get(k).getBr_amount());
+            br_bill_id.add(reminderList.get(k).getBr_bill_id());
+            DateAndTime.add(reminderList.get(k).getBr_due_date() + " " + reminderList.get(k).getBr_due_date_time());
+            br_status.add(reminderList.get(k).getBr_status());
+        }
+        int num = DateAndTime.size();
+
+        for (int k = 0; k < reminderSize; k++) {
+            DateTimeSortList.add(new DateTimeSorter(key, DateAndTime.get(k)));
+
+            key++;
+        }
+
+        int numDate = DateTimeSortList.size();
+        // Sort items according to date and time in ascending order
+        Collections.sort(DateTimeSortList, new DateTimeComparator());
+        int k = 0;
 
 
-        int reminderSize = reminderList.size();
         //ParentProvider reminderListDB = null;
 // Todo updating main list reminder data
-        for (int i = 0; i < reminderSize; i++) {
-            br_reminder_list.add(new ParentProvider(reminderList.get(i).getBr_parent_name(),
-                    reminderList.get(i).getBr_created_date(), reminderList.get(i).getBr_bill_id(),
-                    reminderList.get(i).getBr_amount(), reminderList.get(i).getBr_status(),
-                    makeSublistEditorial(), R.mipmap.ic_launcher_round));
-            Log.d("Database", reminderList.get(i).getBr_bill_id());
-           /* ParentProvider(String title, String dueDate, String billInformation, String billStatus, String billAmount,
-                    List<ChildProvider> items, int iconResId)*/
-        /*public  List<ParentProvider> makeGenres () {
-            return Arrays.asList(makeRockGenre(), makeRockGenre(), makeRockGenre(), makeRockGenre());
-        }*/
+        for (DateTimeSorter item : DateTimeSortList) {
+
+            int i = item.getIndex();
+
+            br_reminder_list.add(new ParentProvider(IDList.get(i),
+                    br_parentName.get(i),
+                    DateAndTime.get(i),
+                    br_bill_id.get(i),
+                    br_amount.get(i),
+                    br_status.get(i),
+                    makeSublistEditorial(),
+                    R.mipmap.ic_launcher_round));
+            //  Log.d("Database", reminderList.get(i).getBr_bill_id());
+
+            IDmap.put(k, IDList.get(i));
+            k++;
+
         }
         //return Arrays.asList(reminderListDB);
         return br_reminder_list;
@@ -245,6 +310,77 @@ public class BillReminderActivity extends AppCompatActivity {
     public static List<ChildProvider> makeSublistEditorial() {
         ChildProvider airtel = new ChildProvider("Already Paid", R.id.child_delete, R.id.child_edit, true);
         return Arrays.asList(airtel);
+    }
+
+    // Class to compare date and time so that items are sorted in ascending order
+    public class DateTimeComparator implements Comparator {
+        DateFormat f = new SimpleDateFormat("dd-mm-yyyy hh:mm");
+
+        public int compare(Object a, Object b) {
+            String o1 = ((DateTimeSorter) a).getDateTime();
+            String o2 = ((DateTimeSorter) b).getDateTime();
+
+            try {
+                return f.parse(o1).compareTo(f.parse(o2));
+            } catch (ParseException e) {
+                throw new IllegalArgumentException(e);
+            }
+        }
+    }
+
+    // Deleting reminder
+    // Get the reminder id associated with the recycler view item
+    /*public void deleteReminder(int adapterPosition) {
+//        if(br_reminder_list.isEmpty())return;
+        br_reminder_list.clear();
+        br_reminder_list.add((ParentProvider) dataList());
+        adapter.notifyItemRemoved(adapterPosition);
+        }
+
+
+
+
+    public void onDeleteItem(int count) {
+        dataList().clear();
+        dataList().addAll(dataList());
+    }
+
+    public void removeItemSelected(int selected) {
+        if (dataList().isEmpty()) return;
+        dataList().remove(selected);
+        adapter.notifyItemRemoved(selected);
+    }
+*/
+    protected int getDefaultItemCount() {
+        return 100;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, MainActivity.class );
+        startActivity(intent);
+    }
+
+    static class BottomOffsetDecoration extends RecyclerView.ItemDecoration {
+        private int mBottomOffset;
+
+        public BottomOffsetDecoration(int bottomOffset) {
+            mBottomOffset = bottomOffset;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            super.getItemOffsets(outRect, view, parent, state);
+            int dataSize = state.getItemCount();
+            int position = parent.getChildAdapterPosition(view);
+            if (dataSize > 0 && position == dataSize - 1) {
+                outRect.set(0, 0, 0, mBottomOffset);
+            } else {
+                outRect.set(0, 0, 0, 0);
+            }
+
+        }
     }
 }
 

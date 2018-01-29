@@ -2,6 +2,7 @@ package com.wealthdoctor.bill_reminder.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -128,6 +129,8 @@ public class BillReminderListActivity extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
+        Intent intent = new Intent(this, BillReminderActivity.class );
+        startActivity(intent);
     }
 
     //To change the color of status bar/*

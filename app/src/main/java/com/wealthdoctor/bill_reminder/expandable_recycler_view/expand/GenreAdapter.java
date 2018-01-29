@@ -15,38 +15,40 @@ import java.util.List;
 
 public class GenreAdapter extends ExpandableRecyclerViewAdapter<MainListViewHolder, SublistViewHolder> {
 
-  Context mContext;
+    Context mContext;
 
-  public GenreAdapter(Context mContext, List<? extends ExpandableGroup> groups) {
-    super(mContext,groups);
-  }
+    public GenreAdapter(Context mContext, List<? extends ExpandableGroup> groups) {
+        super(mContext, groups);
+    }
 
-  @Override
-  public MainListViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_genre, parent, false);
-    return new MainListViewHolder(view);
-  }
 
-  @Override
-  public SublistViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
-    View view = LayoutInflater.from(parent.getContext())
-        .inflate(R.layout.list_item_child, parent, false);
-    return new SublistViewHolder(view);
-  }
+    @Override
+    public MainListViewHolder onCreateGroupViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_genre, parent, false);
+        return new MainListViewHolder(view);
+    }
 
-  @Override
-  public void onBindChildViewHolder(SublistViewHolder holder, int flatPosition,
-                                    ExpandableGroup group, int childIndex) {
+    @Override
+    public SublistViewHolder onCreateChildViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.list_item_child, parent, false);
+        return new SublistViewHolder(view);
+    }
 
-    final ChildProvider childProvider = ((ParentProvider) group).getItems().get(childIndex);
-    holder.setArtistName(childProvider.getName());
-  }
-//Todo to edit the main list item
-  @Override
-  public void onBindGroupViewHolder(MainListViewHolder holder, int flatPosition,
-                                    ExpandableGroup group) {
+    @Override
+    public void onBindChildViewHolder(SublistViewHolder holder, int flatPosition,
+                                      ExpandableGroup group, int childIndex) {
 
-    holder.setGenreTitle(group);
-  }
+        final ChildProvider childProvider = ((ParentProvider) group).getItems().get(childIndex);
+        holder.setArtistName(childProvider.getName());
+    }
+
+    //Todo to edit the main list item
+    @Override
+    public void onBindGroupViewHolder(MainListViewHolder holder, int flatPosition,
+                                      ExpandableGroup group) {
+
+        holder.setGenreTitle(group);
+    }
 }

@@ -2,8 +2,11 @@
 
 package com.wealthdoctor.bill_reminder.reminder;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 // Reminder class
-public class Reminder {
+public class Reminder implements Parcelable {
     private int br_id;
     private String br_parent_name;
     private int br_parent_id;
@@ -72,6 +75,38 @@ public class Reminder {
         this.br_last_viewed_date = br_last_viewed_date;
         this.br_lang_id = br_lang_id;
     }
+
+    protected Reminder(Parcel in) {
+        br_id = in.readInt();
+        br_parent_name = in.readString();
+        br_parent_id = in.readInt();
+        br_child_name = in.readString();
+        br_child_id = in.readInt();
+        br_due_date = in.readString();
+        br_due_date_time = in.readString();
+        br_amount = in.readString();
+        br_bill_id = in.readString();
+        br_bill_frequency = in.readString();
+        br_note = in.readString();
+        br_already_paid = in.readString();
+        br_status = in.readString();
+        br_created_date = in.readString();
+        br_edited_date = in.readString();
+        br_last_viewed_date = in.readString();
+        br_lang_id = in.readInt();
+    }
+
+    public static final Creator<Reminder> CREATOR = new Creator<Reminder>() {
+        @Override
+        public Reminder createFromParcel(Parcel in) {
+            return new Reminder(in);
+        }
+
+        @Override
+        public Reminder[] newArray(int size) {
+            return new Reminder[size];
+        }
+    };
 
     public int getBr_id() {
         return br_id;
@@ -210,4 +245,29 @@ public class Reminder {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(br_id);
+        dest.writeString(br_parent_name);
+        dest.writeInt(br_parent_id);
+        dest.writeString(br_child_name);
+        dest.writeInt(br_child_id);
+        dest.writeString(br_due_date);
+        dest.writeString(br_due_date_time);
+        dest.writeString(br_amount);
+        dest.writeString(br_bill_id);
+        dest.writeString(br_bill_frequency);
+        dest.writeString(br_note);
+        dest.writeString(br_already_paid);
+        dest.writeString(br_status);
+        dest.writeString(br_created_date);
+        dest.writeString(br_edited_date);
+        dest.writeString(br_last_viewed_date);
+        dest.writeInt(br_lang_id);
+    }
 }

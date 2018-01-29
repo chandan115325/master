@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int mReceivedID = Integer.parseInt(intent.getStringExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID));
+       /* int mReceivedID = Integer.parseInt(intent.getStringExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID));
 
         // Get notification title from Reminder Database
         ReminderDatabase rb = new ReminderDatabase(context);
@@ -68,11 +68,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                 .setOnlyAlertOnce(true);
 
         NotificationManager nManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        nManager.notify(mReceivedID, mBuilder.build());
+        nManager.notify(mReceivedID, mBuilder.build());*/
     }
 
     public void setAlarm(Context context, Calendar calendar, int ID) {
-        mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        /*mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Put Reminder ID in Intent Extra
         Intent intent = new Intent(context, AlarmReceiver.class);
@@ -88,7 +88,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         mAlarmManager.set(AlarmManager.ELAPSED_REALTIME,
                 SystemClock.elapsedRealtime() + diffTime,
                 mPendingIntent);
-
+*/
         // Restart alarm if device is rebooted
         ComponentName receiver = new ComponentName(context, BootReceiver.class);
         PackageManager pm = context.getPackageManager();
@@ -101,10 +101,10 @@ public class AlarmReceiver extends BroadcastReceiver {
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Put Reminder ID in Intent Extra
-        Intent intent = new Intent(context, AlarmReceiver.class);
+        /*Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, Integer.toString(ID));
         mPendingIntent = PendingIntent.getBroadcast(context, ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
+*/
         // Calculate notification timein
         Calendar c = Calendar.getInstance();
         long currentTime = c.getTimeInMillis();

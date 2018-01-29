@@ -9,7 +9,7 @@ public class ParentProvider extends ExpandableGroup<ChildProvider> {
 
     private int iconResId;
 //Todo Main reminder list items
-    public ParentProvider(String title, String dueDate, String billID, String billAmount, String billStatus,
+    public ParentProvider(int br_id, String title, String dueDate, String billID, String billAmount, String billStatus,
                           List<ChildProvider> items, int iconResId) {
         super(title, dueDate, billID,  billAmount, billStatus, items);
         this.iconResId = iconResId;

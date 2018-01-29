@@ -1,5 +1,6 @@
 package com.wealthdoctor.bill_reminder.activity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -21,16 +22,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
+import android.app.Dialog;
+import android.app.DialogFragment;
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.model.BillReminderDetailData;
 import com.wealthdoctor.bill_reminder.reminder.Reminder;
 import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
-
-import java.util.Calendar;
 import java.util.List;
 
 
-public class BillReminderDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class BillReminderDetailActivity extends AppCompatActivity implements View.OnClickListener  {
+
+    TimePickerDialog timepickerdialog1;
+    Calendar calendar;
+    int hour,minute;
+    DialogFragment dialogfragment;
 
     private TextInputEditText selectDateEditText;
     private TextInputEditText amountEditText;
@@ -49,6 +57,9 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
     private long mRepeatTime;
     private String mRepeat;
     private String mRepeatNo;
+    private String mTime;
+
+
 
     // Constant values in milliseconds
     private static final long milMinute = 60000L;
@@ -172,7 +183,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
                     new DatePickerDialog.OnDateSetListener() {
 
                         @Override
@@ -461,21 +472,48 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
     // Time picker from edittext
     public void selectDueDateTime(View view) {
 
-        Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
-        TimePickerDialog mTimePicker;
-        mTimePicker = new TimePickerDialog(BillReminderDetailActivity.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                timeEditText.setText(hourOfDay + ":" + minute);
-            }
+        dialogfragment = new TimePickerTheme1class();
+        calendar = Calendar.getInstance();
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+        dialogfragment.show(getFragmentManager(),"Time Picker with Theme 1");
+        timeEditText.setText(hour + ":" + minute);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, BillReminderActivity.class );
+        startActivity(intent);
+    }
 
 
-        }, hour, minute, true);//Yes 24 hour time
-        mTimePicker.setTitle("Select Time");
-        mTimePicker.show();
+    @SuppressLint("ValidFragment")
+    public class TimePickerTheme1class extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState){
+
+            timepickerdialog1 = new TimePickerDialog(getActivity(),
+                    R.style.TimePickerTheme,this,hour,minute,false);
+
+            return timepickerdialog1;
+        }
+
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute){
+
+            //DisplayTime.setText(hourOfDay + ":" + minute);
+        }
 
     }
+
 }
+
+/*
+<style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+<item name="colorAccent">@color/color_primary</item>
+<item name="android:layout_width">wrap_content</item>
+<item name="android:layout_height">wrap_content</item>
+</style>
+
+        TimePickerDialog timePicker = new TimePickerDialog(mContext, R.style.TimePickerTheme, fromListener, hour, min, false);*/

@@ -41,4 +41,10 @@
         <item name="android:paddingRight">8dp</item>
         <item name="android:background">?android:attr/actionBarItemBackground</item>
     </style>
+<!--Date and time picker theme-->
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#304ffe</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 </resources>

@@ -42,4 +42,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="design_navigation_icon_size" tools:override="true">40dp</dimen>
+    <dimen name="bottom_offset_dp">60dp</dimen>
+
 </resources>

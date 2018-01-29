@@ -46,7 +46,10 @@
             android:layout_below="@id/calendar"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:focusedByDefault="true" />
+            android:focusedByDefault="true">
+
+
+        </android.support.v7.widget.RecyclerView>
 
         <LinearLayout
             android:id="@+id/bill_total_LL"
