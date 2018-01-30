@@ -67,7 +67,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
                         //temp.getBr_amount();
                         //temp.getBr_id();
                         // Delete reminder
-                        rb.deleteReminder(temp);
+                        // rb.deleteReminder(temp);
                         // Remove reminder from recycler view
                         BillReminderActivity.adapter.notifyItemRemoved(getAdapterPosition());
                         BillReminderActivity.br_reminder_list.remove(i);
@@ -135,4 +135,15 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
             }
         });
     }
+
+    /*// On clicking a reminder item
+    private void selectReminder(int mClickID) {
+        String mStringClickID = Integer.toString(mClickID);
+
+        // Create intent to edit the reminder
+        // Put reminder id as extra
+        Intent i = new Intent(mContext, BillReminderDetailEditActivity.class);
+        i.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, mStringClickID);
+       // mContextstartActivityForResult(i, 1);
+    }*/
 }

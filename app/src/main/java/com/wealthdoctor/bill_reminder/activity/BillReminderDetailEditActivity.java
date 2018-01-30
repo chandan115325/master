@@ -100,6 +100,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     private String reminderType;
     private ScrollView billReminderScroller;
 
+    public static String EXTRA_REMINDER_ID = "edit";
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     List<Reminder> data;
@@ -153,7 +154,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         yearlyText.setOnClickListener(this);
         quarterlyText.setOnClickListener(this);
 
-        billReminderDetailData =  getIntent().getParcelableExtra("Provider List");
+       // billReminderDetailData =  getIntent().getParcelableExtra("Provider List");
 
         coloredView = dummyView;
 
@@ -293,10 +294,10 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         halfYearly = halfYearlyText.getText().toString();
         yearly = yearlyText.getText().toString();
 
-        br_parent_id = editableReminder.getBr_parent_id();
-        br_parent_name = editableReminder.getBr_parent_name();
-        br_child_id = editableReminder.getBr_child_id();
-        br_child_name = editableReminder.getBr_child_name();
+       // br_parent_id = editableReminder.getBr_parent_id();
+       // br_parent_name = editableReminder.getBr_parent_name();
+       // br_child_id = editableReminder.getBr_child_id();
+       // br_child_name = editableReminder.getBr_child_name();
         br_due_date = selectDateEditText.getText().toString();
         br_due_date_time = timeEditText.getText().toString();
         br_amount = amountEditText.getText().toString();
@@ -309,6 +310,16 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         br_edited_date = timeEditText.getText().toString();
         br_last_viewed_date = "unknown";
         br_lang_id = 1;
+//        int br_id = editableReminder.getBr_id();
+
+        // updating editable reminder
+        editableReminder.setBr_already_paid(br_already_paid);
+        editableReminder.setBr_amount(br_amount);
+        editableReminder.setBr_bill_id(br_bill_id);
+        editableReminder.setBr_due_date(br_due_date);
+        editableReminder.setBr_bill_frequency(br_bill_frequency);
+        editableReminder.setBr_due_date_time(br_due_date_time);
+
 
         if (br_due_date.length() < 5) {
             tilDueDate.setError("Please select Due Date");
@@ -359,11 +370,9 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         if (validation) {
             ReminderDatabase rb = new ReminderDatabase(BillReminderDetailEditActivity.this);
 
-            // Creating Reminder
-            int ID = rb.addReminder(new Reminder(br_parent_name, br_parent_id, br_child_name, br_child_id,
-                    br_due_date, br_due_date_time, br_amount, br_bill_id,
-                    br_bill_frequency, br_note, br_already_paid, br_status,
-                    br_created_date, br_edited_date, br_last_viewed_date, br_lang_id));
+            // Updating Reminder
+
+            int ID = rb.updateReminder(editableReminder);
 
             data = rb.getAllReminders();
             Log.d("Database", data.get(0).getBr_already_paid().toString());
@@ -508,6 +517,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         }
 
     }
+
 
 }
 

@@ -88,7 +88,7 @@ public class BootReceiver extends BroadcastReceiver {
                 // Cancel existing notification of the reminder by using its ID
                 // mAlarmReceiver.cancelAlarm(context, mReceivedID);
 
-                // Check repeat type
+               /* // Check repeat type
                 if (mRepeatType.equals("Minute")) {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
                 } else if (mRepeatType.equals("Hour")) {
@@ -99,16 +99,16 @@ public class BootReceiver extends BroadcastReceiver {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
                 } else if (mRepeatType.equals("Month")) {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
-                }
+                }*/
 
                 // Create a new notification
-                if (mActive.equals("true")) {
-                    if (mRepeat.equals("true")) {
-                        mAlarmReceiver.setRepeatAlarm(context, mCalendar, mReceivedID, mRepeatTime);
-                    } else if (mRepeat.equals("false")) {
+                //if (mActive.equals("true")) {
+                  //  if (mRepeat.equals("true")) {
+                   //     mAlarmReceiver.setRepeatAlarm(context, mCalendar, mReceivedID, mRepeatTime);
+                   // } else if (mRepeat.equals("false")) {
                         mAlarmReceiver.setAlarm(context, mCalendar, mReceivedID);
-                    }
-                }
+                    //}
+               // }
             }
         }
     }
