@@ -28,6 +28,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
     BillReminderActivity billReminderActivity = new BillReminderActivity();
     Reminder temp;
     boolean status;
+    int id;
 
     public ChildViewHolder(View itemView) {
         super(itemView);
@@ -55,11 +56,12 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
         editIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 int i = getAdapterPosition()-1 ;
                 //if (i >= 0)
                 for( int j = billReminderActivity.IDmap.size(); j>=0; j--){
                     if(j == i) {
-                        int id = billReminderActivity.IDmap.get(j);
+                         id = billReminderActivity.IDmap.get(j);
 
                         // Get reminder from reminder database using id
 
@@ -81,7 +83,8 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
                 }
 
                 Intent intent = new Intent(mContext, BillReminderDetailEditActivity.class);
-                intent.putExtra("edit", temp);
+                intent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, id);
+                Log.d("ID value", id+"");
                 mContext.startActivity(intent);
 
                 Log.d("BillReminder", "Edit Icon working");

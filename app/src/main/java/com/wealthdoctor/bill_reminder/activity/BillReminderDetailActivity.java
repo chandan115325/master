@@ -193,7 +193,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                                               int monthOfYear, int dayOfMonth) {
 
                             mYear = year;
-                            mMonth = monthOfYear+1;
+                            mMonth = monthOfYear + 1;
                             mDay = dayOfMonth;
                             selectDateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 
@@ -202,12 +202,13 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
             datePickerDialog.show();
 
         }
-       // dueDate = selectDateEditText.getText().toString();
+        // dueDate = selectDateEditText.getText().toString();
     }
+
     // Time picker from edittext
     public void selectDueDateTime(View view) {
 
-        if(view == timeEditText){
+        if (view == timeEditText) {
 
             //mCalendar = Calendar.getInstance();
             mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
@@ -414,7 +415,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
         mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
         mCalendar.set(Calendar.MINUTE, mMinute);
         mCalendar.set(Calendar.SECOND, 0);
-        Log.d("Remindly", --mMonth+":"+mYear+":"+mDay+":"+mHour+":"+mMinute+":"+0);
+        Log.d("Remindly", --mMonth + ":" + mYear + ":" + mDay + ":" + mHour + ":" + mMinute + ":" + 0);
         // TODO Check repeat type
                 /*if (mRepeatType.equals("Minute")) {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
@@ -429,20 +430,18 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
                 }*/
 
         // TODO Create a new notification
-       // if (br_status.equals("unpaid")) {
-            // if (mRepeat.equals("true")) {
-            //  new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
-            //} else if (mRepeat.equals("false")) {
-            new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
+        // if (br_status.equals("unpaid")) {
+        // if (mRepeat.equals("true")) {
+        //  new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
+        //} else if (mRepeat.equals("false")) {
+        new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
 
-       // }
+        // }
         Toast.makeText(getApplicationContext(), "Saved",
                 Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(BillReminderDetailActivity.this, BillReminderActivity.class);
         startActivity(intent);
     }
-
-
 
 
     @Override
@@ -453,15 +452,5 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
     }
 
 
-
-
 }
 
-/*
-<style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
-<item name="colorAccent">@color/color_primary</item>
-<item name="android:layout_width">wrap_content</item>
-<item name="android:layout_height">wrap_content</item>
-</style>
-
-        TimePickerDialog timePicker = new TimePickerDialog(mContext, R.style.TimePickerTheme, fromListener, hour, min, false);*/

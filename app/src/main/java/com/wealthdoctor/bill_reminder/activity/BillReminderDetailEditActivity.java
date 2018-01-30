@@ -36,7 +36,6 @@ import java.util.List;
 public class BillReminderDetailEditActivity extends AppCompatActivity implements View.OnClickListener  {
 
     TimePickerDialog timepickerdialog1;
-    Calendar calendar;
     int hour,minute;
     DialogFragment dialogfragment;
 
@@ -96,11 +95,12 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     private String br_edited_date;
     private String br_last_viewed_date;
     private int br_lang_id;
+    private int mReceivedID;
 
     private String reminderType;
     private ScrollView billReminderScroller;
 
-    public static String EXTRA_REMINDER_ID = "edit";
+    public static String EXTRA_REMINDER_ID = "editReminderNotification";
     private Calendar mCalendar;
     private int mYear, mMonth, mHour, mMinute, mDay;
     List<Reminder> data;
@@ -125,7 +125,18 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Add Bill Account");
 
-        editableReminder = getIntent().getParcelableExtra("edit");
+        mCalendar = Calendar.getInstance();
+        // Get reminder id from intent from notification
+       // mReceivedID = Integer.parseInt(getIntent().getStringExtra(EXTRA_REMINDER_ID));
+
+        // Get reminder using reminder id
+        ReminderDatabase rb_reminder = new ReminderDatabase(this);
+        //Reminder mReceivedReminder = rb_reminder.getReminder(mReceivedID);
+
+        // Editable reminder from edit option
+        int editableReminderID = getIntent().getIntExtra(EXTRA_REMINDER_ID,0);
+
+        editableReminder = rb_reminder.getReminder(editableReminderID);
 
         selectDateEditText = (TextInputEditText) findViewById(R.id.bill_reminder_due_date_edittext);
         timeEditText = (TextInputEditText) findViewById(R.id.bill_reminder_due_date_time_edittext);
@@ -174,7 +185,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         });
     }
 
-    // Date picker function
+    /*// Date picker function
     public void selectDueDate(View view) {
         if (view == selectDateEditText) {
 
@@ -202,7 +213,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
         }
         dueDate = selectDateEditText.getText().toString();
-    }
+    }*/
 
     // Selecting the bill frequency
     @Override
@@ -374,11 +385,11 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
             int ID = rb.updateReminder(editableReminder);
 
-            data = rb.getAllReminders();
+            /*data = rb.getAllReminders();
             Log.d("Database", data.get(0).getBr_already_paid().toString());
             Log.d("Database", data.get(0).getBr_due_date().toString());
             Log.d("Database", data.get(0).getBr_due_date_time().toString());
-            Log.d("Database", data.get(0).getBr_amount().toString());
+            Log.d("Database", data.get(0).getBr_amount().toString());*/
 //            Log.d("Database", data.get(0).getBr_bill_frequency().toString());
 
             //Log.d("Database", data.toString());
@@ -421,6 +432,65 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
 
         //}
+    }
+
+    // Date picker function
+    public void selectDueDate(View view) {
+        if (view == selectDateEditText) {
+
+            // Get Current Date
+            //mCalendar = Calendar.getInstance();
+            mYear = mCalendar.get(Calendar.YEAR);
+            mMonth = mCalendar.get(Calendar.MONTH);
+            mDay = mCalendar.get(Calendar.DAY_OF_MONTH);
+
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(this, R.style.TimePickerTheme,
+                    new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+
+                            mYear = year;
+                            mMonth = monthOfYear+1;
+                            mDay = dayOfMonth;
+                            selectDateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
+                        }
+                    }, mYear, mMonth, mDay);
+            datePickerDialog.show();
+
+        }
+        // dueDate = selectDateEditText.getText().toString();
+    }
+    // Time picker from edittext
+    public void selectDueDateTime(View view) {
+
+        if(view == timeEditText){
+
+            //mCalendar = Calendar.getInstance();
+            mHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+            mMinute = mCalendar.get(Calendar.MINUTE);
+
+            // Launch Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(this, R.style.TimePickerTheme,
+                    new TimePickerDialog.OnTimeSetListener() {
+
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay,
+                                              int minute) {
+                            mHour = hourOfDay;
+
+                            mMinute = minute;
+
+                            timeEditText.setText(hourOfDay + ":" + minute);
+                        }
+                    }, mHour, mMinute, false);
+            timePickerDialog.show();
+        }
+
+
     }
 
     // Todo to create reminder and notification
@@ -480,7 +550,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         onBackPressed();*/
     }
 
-    // Time picker from edittext
+  /*  // Time picker from edittext
     public void selectDueDateTime(View view) {
 
         dialogfragment = new TimePickerTheme1class();
@@ -489,7 +559,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         minute = calendar.get(Calendar.MINUTE);
         dialogfragment.show(getFragmentManager(),"Time Picker with Theme 1");
         timeEditText.setText(hour + ":" + minute);
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

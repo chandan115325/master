@@ -76,6 +76,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         mAlarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Put Reminder ID in Intent Extra
+
         Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, Integer.toString(ID));
         mPendingIntent = PendingIntent.getBroadcast(context, ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
