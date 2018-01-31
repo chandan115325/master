@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ExpandableList {
 
-  public List<? extends ExpandableGroup> groups;
+  public static List<? extends ExpandableGroup> groups;
   public boolean[] expandedGroupIndexes;
 
   public ExpandableList(List<? extends ExpandableGroup> groups) {

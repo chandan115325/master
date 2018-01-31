@@ -44,7 +44,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        int mReceivedID = Integer.parseInt(intent.getStringExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID));
+        int mReceivedID = intent.getIntExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, 0);
 
         // Get notification title from Reminder Database
         ReminderDatabase rb = new ReminderDatabase(context);
@@ -53,7 +53,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // Create intent to open ReminderEditActivity on notification click
         Intent editIntent = new Intent(context, BillReminderDetailEditActivity.class);
-        //editIntent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, Integer.toString(mReceivedID));
+        editIntent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, mReceivedID);
         PendingIntent mClick = PendingIntent.getActivity(context, mReceivedID, editIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Create Notification
@@ -78,7 +78,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         // Put Reminder ID in Intent Extra
 
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, Integer.toString(ID));
+        intent.putExtra(BillReminderDetailEditActivity.EXTRA_REMINDER_ID, ID);
         mPendingIntent = PendingIntent.getBroadcast(context, ID, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         // Calculate notification time

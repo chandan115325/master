@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.RotateAnimation;
 
 import com.wealthdoctor.bill_reminder.activity.BillReminderActivity;
 import com.wealthdoctor.bill_reminder.expandable_recycler_view.listeners.OnGroupClickListener;
+
+import static android.view.animation.Animation.RELATIVE_TO_SELF;
 
 
 public abstract class GroupViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
@@ -37,4 +40,6 @@ public abstract class GroupViewHolder extends RecyclerView.ViewHolder implements
 
     public void collapse() {
     }
+
+
 }

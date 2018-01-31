@@ -57,21 +57,21 @@
                     android:layout_toRightOf="@+id/list_item_provider_icon"
                     android:text="category" />
 
-                <ImageView
+                <!--<ImageView
                     android:id="@+id/list_item_genre_arrow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="center_vertical|end"
                     android:layout_marginRight="@dimen/horizontal_margin"
-                    android:src="@drawable/ic_arrow_down" />
+                    android:src="@drawable/ic_arrow_down" />-->
 
                 <ImageView
                     android:id="@+id/list_item_rupees_logo"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:layout_below="@+id/list_item_genre_arrow"
-                    android:layout_marginTop="10dp"
+
+                    android:layout_marginTop="8dp"
                     android:layout_toLeftOf="@+id/list_item_due_amount"
                     android:src="@drawable/rupees_icon" />
 
@@ -80,12 +80,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/list_item_genre_arrow"
                     android:layout_marginRight="16dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="8dp"
                     android:text="100"
                     android:textStyle="bold" />
-
+                <TextView
+                    android:id="@+id/bill_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@id/list_item_due_amount"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginRight="16dp"
+                    android:text="Unpaid"
+                    android:textColor="@color/Red"
+                    />
 
             </RelativeLayout>
 

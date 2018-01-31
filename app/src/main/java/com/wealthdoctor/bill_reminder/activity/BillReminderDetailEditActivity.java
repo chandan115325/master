@@ -28,6 +28,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import com.wealthdoctor.R;
 import com.wealthdoctor.bill_reminder.model.BillReminderDetailData;
+import com.wealthdoctor.bill_reminder.reminder.AlarmReceiver;
 import com.wealthdoctor.bill_reminder.reminder.Reminder;
 import com.wealthdoctor.bill_reminder.reminder.ReminderDatabase;
 import java.util.List;
@@ -110,6 +111,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
     TextInputLayout tilDueAmount;
     TextInputLayout tilInformation;
     Reminder editableReminder;
+    int editableReminderID;
 
     BillReminderDetailData billReminderDetailData;
 
@@ -134,7 +136,7 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         //Reminder mReceivedReminder = rb_reminder.getReminder(mReceivedID);
 
         // Editable reminder from edit option
-        int editableReminderID = getIntent().getIntExtra(EXTRA_REMINDER_ID,0);
+        editableReminderID = getIntent().getIntExtra(EXTRA_REMINDER_ID,0);
 
         editableReminder = rb_reminder.getReminder(editableReminderID);
 
@@ -185,35 +187,6 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
         });
     }
 
-    /*// Date picker function
-    public void selectDueDate(View view) {
-        if (view == selectDateEditText) {
-
-            // Get Current Date
-
-            final Calendar c = Calendar.getInstance();
-            mYear = c.get(Calendar.YEAR);
-            mMonth = c.get(Calendar.MONTH);
-            mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-            DatePickerDialog datePickerDialog = new DatePickerDialog(this,R.style.TimePickerTheme,
-                    new DatePickerDialog.OnDateSetListener() {
-
-                        @Override
-                        public void onDateSet(DatePicker view, int year,
-                                              int monthOfYear, int dayOfMonth) {
-
-
-                            selectDateEditText.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
-                        }
-                    }, mYear, mMonth, mDay);
-            datePickerDialog.show();
-
-        }
-        dueDate = selectDateEditText.getText().toString();
-    }*/
 
     // Selecting the bill frequency
     @Override
@@ -383,31 +356,23 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
             // Updating Reminder
 
-            int ID = rb.updateReminder(editableReminder);
+            rb.updateReminder(editableReminder);
+            new AlarmReceiver().cancelAlarm(getApplicationContext(), editableReminderID);
+            creatingAlarm();
 
-            /*data = rb.getAllReminders();
-            Log.d("Database", data.get(0).getBr_already_paid().toString());
-            Log.d("Database", data.get(0).getBr_due_date().toString());
-            Log.d("Database", data.get(0).getBr_due_date_time().toString());
-            Log.d("Database", data.get(0).getBr_amount().toString());*/
-//            Log.d("Database", data.get(0).getBr_bill_frequency().toString());
-
-            //Log.d("Database", data.toString());
-// Create toast to confirm new reminder
-            Toast.makeText(getApplicationContext(), "Saved",
-                    Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(BillReminderDetailEditActivity.this, BillReminderActivity.class);
-            startActivity(intent);
         }
-        // Todo Set up calender for creating the notification
-               /* mCalendar.set(Calendar.MONTH, --mMonth);
-                mCalendar.set(Calendar.YEAR, mYear);
-                mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
-                mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
-                mCalendar.set(Calendar.MINUTE, mMinute);
-                mCalendar.set(Calendar.SECOND, 0);*/
 
+    }
+    public void creatingAlarm() {
+        // Todo Set up calender for creating the notification
+        --mMonth;
+        mCalendar.set(Calendar.MONTH, mMonth);
+        mCalendar.set(Calendar.YEAR, mYear);
+        mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
+        mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
+        mCalendar.set(Calendar.MINUTE, mMinute);
+        mCalendar.set(Calendar.SECOND, 0);
+        Log.d("Remindly", --mMonth + ":" + mYear + ":" + mDay + ":" + mHour + ":" + mMinute + ":" + 0);
         // TODO Check repeat type
                 /*if (mRepeatType.equals("Minute")) {
                     mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
@@ -422,16 +387,17 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
                 }*/
 
         // TODO Create a new notification
-                /*if (br_status == 1) {
-                    if (mRepeat.equals("true")) {
-                        new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
-                    } else if (mRepeat.equals("false")) {
-                        new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
-                    }
-                }*/
+        // if (br_status.equals("unpaid")) {
+        // if (mRepeat.equals("true")) {
+        //  new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
+        //} else if (mRepeat.equals("false")) {
+        new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, editableReminderID);
 
-
-        //}
+        // }
+        Toast.makeText(getApplicationContext(), "Edited",
+                Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(BillReminderDetailEditActivity.this, BillReminderActivity.class);
+        startActivity(intent);
     }
 
     // Date picker function
@@ -493,73 +459,6 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
     }
 
-    // Todo to create reminder and notification
-    public void fabReminderSave(View view) {
-
-        Log.d("Floating action button", "working");
-
-       /* monthly = monthlyText.getText().toString();
-        biMonthly = biMonthlyText.getText().toString();
-        quarterly = quarterlyText.getText().toString();
-        halfYearly = halfYearlyText.getText().toString();
-        yearly = yearlyText.getText().toString();
-
-        ReminderDatabase rb = new ReminderDatabase(this);
-
-        // Creating Reminder
-        int ID = rb.addReminder(new Reminder( br_parent_name, br_parent_id, br_child_name, br_child_id,
-                br_due_date, br_due_date_time, br_amount, br_bill_id,
-                br_bill_frequency, br_note, br_already_paid, br_status,
-                br_created_date, br_edited_date, br_last_viewed_date, br_lang_id));
-
-        // Set up calender for creating the notification
-        mCalendar.set(Calendar.MONTH, --mMonth);
-        mCalendar.set(Calendar.YEAR, mYear);
-        mCalendar.set(Calendar.DAY_OF_MONTH, mDay);
-        mCalendar.set(Calendar.HOUR_OF_DAY, mHour);
-        mCalendar.set(Calendar.MINUTE, mMinute);
-        mCalendar.set(Calendar.SECOND, 0);
-
-        // TODO Check repeat type
-        if (mRepeatType.equals("Minute")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milMinute;
-        } else if (mRepeatType.equals("Hour")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milHour;
-        } else if (mRepeatType.equals("Day")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milDay;
-        } else if (mRepeatType.equals("Week")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milWeek;
-        } else if (mRepeatType.equals("Month")) {
-            mRepeatTime = Integer.parseInt(mRepeatNo) * milMonth;
-        }
-
-        // Create a new notification
-        if (br_status == 1) {
-            if (mRepeat.equals("true")) {
-                new AlarmReceiver().setRepeatAlarm(getApplicationContext(), mCalendar, ID, mRepeatTime);
-            } else if (mRepeat.equals("false")) {
-                new AlarmReceiver().setAlarm(getApplicationContext(), mCalendar, ID);
-            }
-        }
-
-        // Create toast to confirm new reminder
-        Toast.makeText(getApplicationContext(), "Saved",
-                Toast.LENGTH_SHORT).show();
-        List<Reminder> data = rb.getAllReminders();
-        Log.d("Database:", data.toString());
-        onBackPressed();*/
-    }
-
-  /*  // Time picker from edittext
-    public void selectDueDateTime(View view) {
-
-        dialogfragment = new TimePickerTheme1class();
-        calendar = Calendar.getInstance();
-        hour = calendar.get(Calendar.HOUR_OF_DAY);
-        minute = calendar.get(Calendar.MINUTE);
-        dialogfragment.show(getFragmentManager(),"Time Picker with Theme 1");
-        timeEditText.setText(hour + ":" + minute);
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -590,12 +489,3 @@ public class BillReminderDetailEditActivity extends AppCompatActivity implements
 
 
 }
-
-/*
-<style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
-<item name="colorAccent">@color/color_primary</item>
-<item name="android:layout_width">wrap_content</item>
-<item name="android:layout_height">wrap_content</item>
-</style>
-
-        TimePickerDialog timePicker = new TimePickerDialog(mContext, R.style.TimePickerTheme, fromListener, hour, min, false);*/

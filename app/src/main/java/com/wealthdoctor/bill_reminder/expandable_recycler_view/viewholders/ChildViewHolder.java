@@ -110,6 +110,7 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
                        //temp.getBr_id();
                        // Delete reminder
                        rb.deleteReminder(temp);
+
                        // Remove reminder from recycler view
                        BillReminderActivity.adapter.notifyItemRemoved(getAdapterPosition());
                        BillReminderActivity.br_reminder_list.remove(i);
@@ -121,11 +122,12 @@ public class ChildViewHolder extends RecyclerView.ViewHolder {
                    }
 
                 }
-                billReminderActivity.finish();
+
                 Intent intent = new Intent(mContext, BillReminderActivity.class);
 
                 intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 mContext.startActivity(intent);
+                billReminderActivity.finish();
             }
         });
         alreadyPaid.setOnClickListener(new View.OnClickListener() {

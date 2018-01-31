@@ -427,7 +427,7 @@ public class FlexibleCalendar extends UICalendar {
         }
     }
 
-    private void collapseTo(int index) {
+    public void collapseTo(int index) {
         if (getState() == STATE_COLLAPSED) {
             if (index == -1) {
                 index = mTableBody.getChildCount() - 1;

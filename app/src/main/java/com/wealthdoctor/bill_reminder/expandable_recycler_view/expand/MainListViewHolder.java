@@ -25,7 +25,7 @@ public class MainListViewHolder extends GroupViewHolder {
         super(itemView);
     //Todo to edit the main list item inialization
         providerName = (TextView) itemView.findViewById(R.id.list_item_provider_name);
-        arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
+       // arrow = (ImageView) itemView.findViewById(R.id.list_item_genre_arrow);
         icon = (ImageView) itemView.findViewById(R.id.list_item_provider_icon);
         billReminderDueDate = (TextView) itemView.findViewById(R.id.list_item_reminder_date);
         billID = (TextView) itemView.findViewById(R.id.list_item__bill_id);

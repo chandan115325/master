@@ -26,27 +26,29 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:titleTextColor="#ffffff" />
 
-        </android.support.design.widget.AppBarLayout>
+            <com.wealthdoctor.bill_reminder.calender.widget.FlexibleCalendar
+                android:id="@+id/calendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/app_bar"
+                custom:firstDayOfWeek="sunday"
+                custom:showWeek="true"
+                custom:state="expanded"
+                custom:style="pink" />
 
-        <com.wealthdoctor.bill_reminder.calender.widget.FlexibleCalendar
-            android:id="@+id/calendar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/app_bar"
-            custom:firstDayOfWeek="sunday"
-            custom:showWeek="true"
-            custom:state="expanded"
-            custom:style="pink" />
+
+        </android.support.design.widget.AppBarLayout>
 
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/calendar"
+            android:layout_below="@id/app_bar"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:focusedByDefault="true">
+            android:focusedByDefault="true"
+            android:layoutAnimation="@anim/layout_animation_fall_down">
 
 
         </android.support.v7.widget.RecyclerView>

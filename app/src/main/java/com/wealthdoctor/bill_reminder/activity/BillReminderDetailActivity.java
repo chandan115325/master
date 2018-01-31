@@ -405,7 +405,7 @@ public class BillReminderDetailActivity extends AppCompatActivity implements Vie
 
         //}
     }
-
+// Todo Alarm setting
     public void creatingAlarm() {
         // Todo Set up calender for creating the notification
         --mMonth;

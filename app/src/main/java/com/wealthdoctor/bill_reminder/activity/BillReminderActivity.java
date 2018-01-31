@@ -1,6 +1,7 @@
 package com.wealthdoctor.bill_reminder.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
@@ -18,6 +19,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
 import com.wealthdoctor.MainActivity;
 import com.wealthdoctor.R;
@@ -64,10 +67,16 @@ public class BillReminderActivity extends AppCompatActivity {
     List<DateTimeSorter> DateTimeSortList = new ArrayList<>();
     int reminderSize;
     public static List<ParentProvider> br_reminder_list;
-    ReminderDatabase db ;
+    ReminderDatabase db;
     List<Reminder> reminderList;
     int key = 0;
     public static LinkedHashMap<Integer, Integer> IDmap = new LinkedHashMap<>();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // viewCalendar.collapse(500);
+    }
 
     @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -82,11 +91,12 @@ public class BillReminderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setTitle(R.string.toolbar_title);
         //this.finish();
-        overridePendingTransition(0,0);
+        overridePendingTransition(0, 0);
         getIntent().addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         setTitle("Bill Reminder");
         db = new ReminderDatabase(this);
         viewCalendar = (FlexibleCalendar) findViewById(R.id.calendar);
+
         addButton = (FloatingActionButton) findViewById(R.id.fab_add);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,10 +116,10 @@ public class BillReminderActivity extends AppCompatActivity {
         // RecyclerView has some built in animations to it, using the DefaultItemAnimator.
         // Specifically when you call notifyItemChanged() it does a fade animation for the changing
         // of the data in the ViewHolder. If you would like to disable this you can use the following:
-        RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
+        /*RecyclerView.ItemAnimator animator = recyclerView.getItemAnimator();
         if (animator instanceof DefaultItemAnimator) {
             ((DefaultItemAnimator) animator).setSupportsChangeAnimations(false);
-        }
+        }*/
         br_reminder_list = dataList();
         adapter = new GenreAdapter(BillReminderActivity.this, br_reminder_list);
         recyclerView.setLayoutManager(layoutManager);
@@ -118,7 +128,7 @@ public class BillReminderActivity extends AppCompatActivity {
         float offsetPx = getResources().getDimension(R.dimen.bottom_offset_dp);
         BottomOffsetDecoration bottomOffsetDecoration = new BottomOffsetDecoration((int) offsetPx);
         recyclerView.addItemDecoration(bottomOffsetDecoration);
-
+        //viewCalendar.collapse(500);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -129,7 +139,7 @@ public class BillReminderActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    viewCalendar.collapse(500);
+                    viewCalendar.collapseTo(500);
 
                 } else {
                     viewCalendar.expand(500);
@@ -140,13 +150,7 @@ public class BillReminderActivity extends AppCompatActivity {
 
 
 // Todo to control the recyclerview scroller on item click
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
 
-                return false;
-            }
-        });
         viewCalendar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -163,11 +167,20 @@ public class BillReminderActivity extends AppCompatActivity {
 
         });
 
-
+       // runLayoutAnimation(recyclerView);
         calender();
     }
+// recycler view falling down navigation
+   /* private void runLayoutAnimation(final RecyclerView recyclerView) {
+        final Context context = recyclerView.getContext();
+        final LayoutAnimationController controller =
+                AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down);
 
-
+        recyclerView.setLayoutAnimation(controller);
+        recyclerView.getAdapter().notifyDataSetChanged();
+        recyclerView.scheduleLayoutAnimation();
+    }
+*/
     public void calender() {
 
 
@@ -358,7 +371,7 @@ public class BillReminderActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(this, MainActivity.class );
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

@@ -191,6 +191,7 @@ public class ReminderDatabase extends SQLiteOpenHelper {
 
                 // Adding Reminders to list
                 reminderList.add(reminder);
+
             } while (cursor.moveToNext());
         }
         return reminderList;
